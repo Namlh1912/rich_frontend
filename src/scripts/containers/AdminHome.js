@@ -34,7 +34,7 @@ const list = [
   }
 ]
 
-class Home extends PureComponent {
+class AdminHome extends PureComponent {
   render() {
     return (
       <div id="home" className="container">
@@ -43,8 +43,18 @@ class Home extends PureComponent {
             <div className="menu">
               <h2>{list[0].text}</h2>
               <div className="menu-list">
+                <Link
+                  className="btn-success menu-item"
+                  to={`/admin/products/new`}
+                >
+                  Add new Category
+                </Link>
                 {list[0].list.map(item => (
-                  <Link className="menu-item" to={`/products/${item.id}`}>
+                  <Link
+                    key={item.id}
+                    className="menu-item"
+                    to={`/admin/products/${item.id}`}
+                  >
                     {item.title}
                   </Link>
                 ))}
@@ -55,11 +65,17 @@ class Home extends PureComponent {
             <div className="menu">
               <h2>{list[1].text}</h2>
               <div className="menu-list">
+                <Link
+                  className="btn-success menu-item"
+                  to={`/admin/surveys/new`}
+                >
+                  Add new Survey
+                </Link>
                 {list[1].list.map(item => (
                   <Link
                     key={item.id}
                     className="menu-item"
-                    to={`/products/${item.id}`}
+                    to={`/admin/surveys/${item.id}`}
                   >
                     {item.title}
                   </Link>
@@ -73,4 +89,4 @@ class Home extends PureComponent {
   }
 }
 
-export default Home
+export default AdminHome

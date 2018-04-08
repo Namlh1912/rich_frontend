@@ -1,4 +1,6 @@
 #products {
+  padding-bottom: 70px;
+
   .products-slider {
     .slider-item {
       padding: 20px 0;

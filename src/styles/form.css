@@ -1,0 +1,14 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #login-form {
+    width: 300px;
+    max-width: 100%;
+
+    h1 {
+      margin-top: 0;
+    }
+  }
+}
