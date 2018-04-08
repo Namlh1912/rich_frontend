@@ -1,0 +1,21 @@
+.header {
+  background: linear-gradient(to right, #f08221 0%, #77263d 100%);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  .logo {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .header-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    font-size: 30px;
+    line-height: 70px;
+  }
+}
