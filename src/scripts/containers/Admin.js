@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { logout } from "../actions/auth"
 import { routerActions } from "react-router-redux"
+import { Link } from "react-router"
 
 @connect(
   state => ({
@@ -18,13 +19,18 @@ class Admin extends PureComponent {
     return (
       <div>
         {this.props.children}
-        <button
-          id="btn-logout"
-          className="btn btn-danger"
-          onClick={this._handleClickLogout}
-        >
-          Logout
-        </button>
+        <div id="btn-logout">
+          <Link
+            style={{ marginRight: 10 }}
+            className="btn btn-primary"
+            to="/admin"
+          >
+            Home
+          </Link>
+          <button className="btn btn-danger" onClick={this._handleClickLogout}>
+            Logout
+          </button>
+        </div>
       </div>
     )
   }

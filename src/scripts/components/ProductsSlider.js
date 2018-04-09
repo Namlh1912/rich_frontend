@@ -15,16 +15,18 @@ const SliderItem = ({ data, index }) => {
   const imgStyle = {
     background: `url(${data.image}) no-repeat center center`,
     width: "100%",
-    paddingBottom: "100%"
+    paddingBottom: "100%",
+    backgroundSize: "cover"
   }
-  console.log(data)
 
   return data.isNull ? (
-    <div className="slider-item col-lg-6 col-md-6" />
+    <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
   ) : data.isForm ? (
-    <div className="col-lg-12 col-md-12">this is a test</div>
+    <div className="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+      this is a test
+    </div>
   ) : (
-    <div className="slider-item col-lg-6 col-md-6">
+    <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
       <table width="100%">
         <tbody>
           <tr>

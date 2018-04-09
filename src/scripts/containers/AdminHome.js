@@ -44,16 +44,16 @@ class AdminHome extends PureComponent {
               <h2>{list[0].text}</h2>
               <div className="menu-list">
                 <Link
-                  className="btn-success menu-item"
-                  to={`/admin/products/new`}
+                  className="btn-success color-white menu-item"
+                  to={`/admin/categories/new`}
                 >
-                  Add new Category
+                  <b>Add new Category</b>
                 </Link>
                 {list[0].list.map(item => (
                   <Link
                     key={item.id}
                     className="menu-item"
-                    to={`/admin/products/${item.id}`}
+                    to={`/admin/categories/${item.id}`}
                   >
                     {item.title}
                   </Link>
@@ -66,10 +66,10 @@ class AdminHome extends PureComponent {
               <h2>{list[1].text}</h2>
               <div className="menu-list">
                 <Link
-                  className="btn-success menu-item"
+                  className="btn-success color-white menu-item"
                   to={`/admin/surveys/new`}
                 >
-                  Add new Survey
+                  <b>Add new Survey</b>
                 </Link>
                 {list[1].list.map(item => (
                   <Link

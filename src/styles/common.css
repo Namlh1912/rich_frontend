@@ -2,11 +2,8 @@ body {
   margin: 0;
 
   .body {
-    padding-top: 70px;
+    padding-top: 100px;
     min-height: calc(100vh - 10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .right {
@@ -15,5 +12,9 @@ body {
 
   .left {
     float: left;
+  }
+
+  .color-white {
+    color: white !important;
   }
 }

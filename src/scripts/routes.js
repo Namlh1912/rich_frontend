@@ -7,6 +7,11 @@ import WithAuth from "./hocs/WithAuth"
 import Login from "./containers/Login"
 import Admin from "./containers/Admin"
 import AdminHome from "./containers/AdminHome"
+import AdminCategoriesNew from "./containers/AdminCategoriesNew"
+import AdminCategoriesEdit from "./containers/AdminCategoriesEdit"
+import AdminCategoryDetail from "./containers/AdminCategoryDetail"
+import AdminProductNew from "./containers/AdminProductNew"
+import AdminProductEdit from "./containers/AdminProductEdit"
 
 export default (
   <Route>
@@ -21,6 +26,31 @@ export default (
         })}
       >
         <IndexRoute component={AdminHome} />
+        <Route
+          name="CategoryNew"
+          path="/admin/categories/new(/:id)"
+          component={AdminCategoriesNew}
+        />
+        <Route
+          name="CategoryEdit"
+          path="/admin/categories/edit(/:id)"
+          component={AdminCategoriesEdit}
+        />
+        <Route
+          name="CategoryNew"
+          path="/admin/categories(/:id)"
+          component={AdminCategoryDetail}
+        />
+        <Route
+          name="ProductEdit"
+          path="/admin/products(/:id)/edit"
+          component={AdminProductEdit}
+        />
+        <Route
+          name="ProductNew"
+          path="/admin/products(/:id)/new"
+          component={AdminProductNew}
+        />
       </Route>
     </Route>
   </Route>
