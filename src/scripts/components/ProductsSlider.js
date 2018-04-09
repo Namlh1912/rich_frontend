@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react"
 import Slider from "react-slick"
+import FeedbackForm from "./FeedbackForm"
 
 const settings = {
   slidesToShow: 1,
@@ -22,9 +23,7 @@ const SliderItem = ({ data, index }) => {
   return data.isNull ? (
     <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
   ) : data.isForm ? (
-    <div className="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-      this is a test
-    </div>
+    <div className="col-lg-12 col-md-12"><FeedbackForm/></div>
   ) : (
     <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
       <table width="100%">
