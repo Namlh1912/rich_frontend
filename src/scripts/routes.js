@@ -12,6 +12,8 @@ import AdminCategoriesEdit from "./containers/AdminCategoriesEdit"
 import AdminCategoryDetail from "./containers/AdminCategoryDetail"
 import AdminProductNew from "./containers/AdminProductNew"
 import AdminProductEdit from "./containers/AdminProductEdit"
+import AdminSurveyNew from "./containers/AdminSurveyNew"
+import AdminSurveyEdit from "./containers/AdminSurveyEdit"
 
 export default (
   <Route>
@@ -50,6 +52,16 @@ export default (
           name="ProductNew"
           path="/admin/products(/:id)/new"
           component={AdminProductNew}
+        />
+        <Route
+          name="SurveyNew"
+          path="/admin/surveys/new"
+          component={AdminSurveyNew}
+        />
+        <Route
+          name="SurveyEdit"
+          path="/admin/surveys(/:id)/edit"
+          component={AdminSurveyEdit}
         />
       </Route>
     </Route>

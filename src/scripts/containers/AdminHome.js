@@ -75,7 +75,7 @@ class AdminHome extends PureComponent {
                   <Link
                     key={item.id}
                     className="menu-item"
-                    to={`/admin/surveys/${item.id}`}
+                    to={`/admin/surveys/${item.id}/edit`}
                   >
                     {item.title}
                   </Link>
