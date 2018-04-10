@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react"
 import Slider from "react-slick"
 import FeedbackForm from "./FeedbackForm"
+import StarRatingComponent from "react-star-rating-component"
 
 const settings = {
   slidesToShow: 1,
@@ -12,36 +13,55 @@ const settings = {
   arrows: false
 }
 
-const SliderItem = ({ data, index }) => {
-  const imgStyle = {
-    background: `url(${data.image}) no-repeat center center`,
-    width: "100%",
-    paddingBottom: "100%",
-    backgroundSize: "cover"
+class SliderItem extends PureComponent {
+  state = {
+    rating: 0
   }
 
-  return data.isNull ? (
-    <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
-  ) : data.isForm ? (
-    <div className="col-lg-12 col-md-12"><FeedbackForm/></div>
-  ) : (
-    <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
-      <table width="100%">
-        <tbody>
-          <tr>
-            <td width="50%">
-              <div className="slider-item-img" style={imgStyle} />
-            </td>
-            <td width="50%" className="slider-item-info">
-              <div className="item-index">{`0${index + 1}.`}</div>
-              <div className="item-title">{data.title}</div>
-              <div className="item-description">{data.description}</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  )
+  _handleRating = next => {
+    this.setState({ rating: next })
+  }
+
+  render() {
+    const { data, index } = this.props
+    const { rating } = this.state
+    const imgStyle = {
+      background: `url(${data.image}) no-repeat center center`,
+      width: "100%",
+      paddingBottom: "100%",
+      backgroundSize: "cover"
+    }
+
+    return data.isNull ? (
+      <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
+    ) : data.isForm ? (
+      <div className="col-lg-12 col-md-12">
+        <FeedbackForm />
+      </div>
+    ) : (
+      <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <table width="100%">
+          <tbody>
+            <tr>
+              <td width="50%">
+                <div className="slider-item-img" style={imgStyle} />
+              </td>
+              <td width="50%" className="slider-item-info">
+                <div className="item-index">{`0${index + 1}.`}</div>
+                <div className="item-title">{data.title}</div>
+                <div className="item-description">{data.description}</div>
+                <StarRatingComponent
+                  starCount={5}
+                  value={rating}
+                  onStarClick={this._handleRating}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 }
 
 const formatData = data => {
