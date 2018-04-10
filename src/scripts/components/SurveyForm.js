@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import CakeImg from "../../images/cake2.jpg";
 
 const province = [
   { key: "HCM", text: "Hồ Chí Minh" },
@@ -36,29 +37,29 @@ const CustomerInfoForm = () => {
             <label>HÌNH THỨC KINH DOANH</label>
           </div>
           <div className="form-group col-lg-12 col-md-12">
-            <label class="checkbox-wrapper col-md-6">
+            <label className="checkbox-wrapper col-md-6">
               Bakery
               <input type="checkbox" />
-              <span class="checkmark" />
+              <span className="checkmark" />
             </label>
-            <label class="checkbox-wrapper col-md-6">
+            <label className="checkbox-wrapper col-md-6">
               Food Service
               <input type="checkbox" />
-              <span class="checkmark" />
+              <span className="checkmark" />
             </label>
-            <label class="checkbox-wrapper col-md-6">
+            <label className="checkbox-wrapper col-md-6">
               Ratiler
               <input type="checkbox" />
-              <span class="checkmark" />
+              <span className="checkmark" />
             </label>
-            <label class="checkbox-wrapper col-md-6">
+            <label className="checkbox-wrapper col-md-6">
               <input type="checkbox" />
               <input
                 type="text"
                 placeholder="Others"
                 className="form-control"
               />
-              <span class="checkmark" />
+              <span className="checkmark" />
             </label>
           </div>
 
@@ -137,7 +138,7 @@ const CheckboxForm = ({ data }) => {
           <label key={index} class="checkbox-wrapper col-xs-6 col-md-6">
             {item.answer}
             <input type="checkbox" />
-            <span class="checkmark" />
+            <span className="checkmark" />
           </label>
         ))}
       </div>
@@ -205,20 +206,24 @@ class Survey extends PureComponent {
 
   render() {
     const imgStyle = {
-      background: `url(${"https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG"}) no-repeat`,
+      background: `url(${CakeImg}) no-repeat`,
       backgroundSize: "cover",
-      display: "flex",
+      height: "100vh",
       textAlign: "center",
       backgroundPosition: "center"
     };
     return (
-      <div className="col-lg-12 col-md-12">
-        <div className="col-lg-4 col-md-4">
-          <CustomerInfoForm />
-          <br />
-        </div>
-        <div style={imgStyle} className="blur-background col-lg-8 col-md-8">
-          <SurveyForm data={this.props.data} />
+      <div className="row">
+        <div className="row">
+          <div className="col-lg-12 col-md-12">
+            <div className="col-lg-4 col-md-4">
+              <CustomerInfoForm />
+              <br />
+            </div>
+            <div style={imgStyle} className="blur-background col-lg-8 col-md-8">
+              <SurveyForm data={this.props.data} />
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -1,150 +1,51 @@
-import React, { PureComponent } from 'react';
-import SurveyForm from "../components/SurveyForm"
+import React, { PureComponent } from "react";
+import SurveyForm from "../components/SurveyForm";
 
 const surveyDataDetail = [
   {
     id: "1",
-    question: "This is burger",
-    type:"radio",
-    answers:[
-      {answer:"Đúng"},
-      {answer:"Sai"}
+    question: "Bạn có đang sử dụng sản phẩm của rich",
+    type: "radio",
+    answers: [{ answer: "Có" }, { answer: "Không" }]
+  },
+  {
+    id: "2",
+    question: "Nhóm sản phẩm khách hàng quan tâm:",
+    type: "checkbox",
+    answers: [
+      { answer: "TCCS/Kem" },
+      { answer: "Bakery mix/ Bột" },
+      { answer: "FFIGSS/ Mứt, siro, sốt" },
+      { answer: "Chocolate/ Socola" },
+      { answer: "Other" }
     ]
   },
   {
-    id:"2",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"3",
-    question: "Your choices?",
-    type:"text",
-    answer:[],
-  },
-  {
-    id:"4",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"5",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"6",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id: "7",
-    question: "This is burger",
-    type:"radio",
-    answers:[
-      {answer:"Có"},
-      {answer:"Không"}
+    id: "3",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" },
+      { answer: "Others" }
     ]
   },
   {
-    id: "8",
-    question: "This is burger",
-    type:"radio",
-    answers:[
-      {answer:"Có"},
-      {answer:"Không"}
-    ]
-  },
-  {
-    id: "9",
-    question: "This is burger",
-    type:"radio",
-    answers:[
-      {answer:"Có"},
-      {answer:"Không"}
-    ]
-  },
-  {
-    id:"10",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"11",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"12",
-    question: "Your choices?",
-    type:"text",
-    answer:[],
-  },
-  {
-    id:"13",
-    question: "Your choices?",
-    type:"text",
-    answer:[],
-  },
-  {
-    id:"14",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-  {
-    id:"15",
-    question: "Types of burger",
-    type:"checkbox",
-    answers:[
-      { answer:"Chicken" },
-      { answer:"Bulgogi" },
-      { answer:"Pork" },
-    ],
-  },
-]
+    id: "4",
+    question: "Yêu cầu của khách hàng",
+    type: "text",
+    answer: []
+  }
+];
 
-class Surveys extends PureComponent{
-  render(){
-    return(
+class Surveys extends PureComponent {
+  render() {
+    return (
       <div id="surveys" className="container-fluid">
         <SurveyForm data={surveyDataDetail} />
       </div>
-    )
+    );
   }
 }
 

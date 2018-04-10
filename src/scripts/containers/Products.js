@@ -1,40 +1,42 @@
 import React, { PureComponent } from "react";
 import ProductsSlider from "../components/ProductsSlider";
-import Logo from "../../images/yogurt.jpg";
+import DonutImg from "../../images/donut.jpg";
+import YogurtImg from "../../images/yogurt.jpg";
+import CakeImg from "../../images/cake.jpg";
 
 const productDataDetail = [
   {
     id: "1",
-    title: "Burger",
-    image: "../../images/yogurt.jpg",
+    title: "Yogurt",
+    image: YogurtImg,
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
   {
     id: "2",
-    title: "Sandwich",
-    image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
+    title: "Cake",
+    image: CakeImg,
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
   {
     id: "3",
-    title: "Hotdog",
-    image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
+    title: "Donut",
+    image: DonutImg,
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
   {
     id: "4",
-    title: "Rice",
-    image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
+    title: "Cake",
+    image: CakeImg,
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
   {
     id: "5",
-    title: "Nugget-chicken",
-    image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
+    title: "Cake",
+    image: CakeImg,
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
