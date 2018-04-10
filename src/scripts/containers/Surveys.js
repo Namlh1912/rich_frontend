@@ -7,8 +7,8 @@ const surveyDataDetail = [
     question: "This is burger",
     type:"radio",
     answers:[
-      {answer:"Có"},
-      {answer:"Không"}
+      {answer:"Đúng"},
+      {answer:"Sai"}
     ]
   },
   {

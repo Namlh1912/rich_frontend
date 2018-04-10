@@ -19,139 +19,205 @@
   }
 }
 
-.form-feedback{
-  display:flex;
+.form-feedback {
+  display: flex;
   justify-content: center;
 
-  .form-control.feedback{
-    border: 2px solid #C42029;
+  .form-control.feedback {
+    border: 2px solid #c42029;
   }
-  
 }
 
-.btn-primary.submit{
-  background-image:linear-gradient(to right, #F0851F 0%, #CD1D2B 50% , #841F32 100%);
-  border:none;
-  width:100px;
+.btn-primary.submit {
+  background-image: linear-gradient(
+    to right,
+    #f0851f 0%,
+    #cd1d2b 50%,
+    #841f32 100%
+  );
+  border: none;
+  width: 100px;
 }
 
-.btn span.glyphicon {    			
-	opacity: 0 !important;				
+.btn span.glyphicon {
+  opacity: 0 !important;
 }
-.btn.active span.glyphicon {				
-	opacity: 1 !important;				
+.btn.active span.glyphicon {
+  opacity: 1 !important;
 }
 
-#surveys{
-  width:100%;
-  font-size:13px;
+#surveys {
+  width: 100%;
+  font-size: 13px;
 
-  .form-customer{
-    .form-control.customer{
-      background-color: #EFF1F0;
-      border: 1px solid #EFF1F0;
+  .form-customer {
+    .checkbox-wrapper {
+      font-weight: normal;
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
-    .form-control.others{
-      width:60%;
+    .checkbox-wrapper input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
     }
 
-    @media all and (max-width:1025px){
-      h3.customer{
-        font-size:21px; 
-      }  
-    }
-    h3.customer{
-     text-align: center; 
-    }
-
-    .btn-primary.submit{
-      font-size:11px;
+    /* Create a custom checkbox */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #39b455;
     }
 
-      .form-group input[type="checkbox"] {
-        display: none;
-      }
+    /* On mouse-over, add a grey background color */
+    .checkbox-wrapper:hover input[type="checkbox"] ~ .checkmark {
+      background-color: #41b44c;
+    }
 
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
+    /* When the checkbox is checked, add a blue background */
+    .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
+      background-color: #39b455;
+    }
 
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
 
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
+    /* Show the checkmark when checked */
+    .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
+      display: block;
+    }
 
+    /* Style the checkmark/indicator */
+    .checkbox-wrapper .checkmark:after {
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .form-control.customer {
+      background-color: #eff1f0;
+      border: 1px solid #eff1f0;
+    }
+
+    .form-control.others {
+      width: 60%;
+    }
+
+    @media all and (max-width: 1025px) {
+      h3.customer {
+        font-size: 21px;
+      }
+    }
+    h3.customer {
+      text-align: center;
+    }
+
+    .btn-primary.submit {
+      font-size: 11px;
+    }
   }
-  .form-survey{
+
+  .form-survey {
     overflow-y: scroll;
     height: 500px;
 
-    .form-control.answer{
-      background-color: #d3d9e2;
-      border:none;
-      opacity:0.5;
-      font-weight:bold;
+    h3 {
+      color: white;
+    }
+
+    .form-control.answer {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      font-weight: bold;
       color: #000000;
     }
 
-      .form-group input[type="radio"] {
-        display: none;
-      }
+    .checkbox-wrapper {
+      font-weight: bold;
+      color: white;
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-      .form-group input[type="radio"] + .btn-group > label span {
-          width: 20px;
-      }
+    .checkbox-wrapper input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
 
-      .form-group input[type="radio"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="radio"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
+    /* Create a custom checkbox */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #39b455;
+    }
 
-      .form-group input[type="radio"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="radio"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
+    /* On mouse-over, add a grey background color */
+    .checkbox-wrapper:hover input ~ .checkmark {
+      background-color: #41b44c;
+    }
 
-      .form-group input[type="checkbox"] {
-        display: none;
-      }
+    /* When the checkbox is checked, add a blue background */
+    .checkbox-wrapper input:checked ~ .checkmark {
+      background-color: #39b455;
+    }
 
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
 
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
+    /* Show the checkmark when checked */
+    .checkbox-wrapper input:checked ~ .checkmark:after {
+      display: block;
+    }
 
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
-
+    /* Style the checkmark/indicator */
+    .checkbox-wrapper .checkmark:after {
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
   }
- }
-
- 
-
-
-
+}

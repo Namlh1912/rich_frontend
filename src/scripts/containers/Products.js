@@ -1,11 +1,12 @@
-import React, { PureComponent } from "react"
-import ProductsSlider from "../components/ProductsSlider"
+import React, { PureComponent } from "react";
+import ProductsSlider from "../components/ProductsSlider";
+import Logo from "../../images/yogurt.jpg";
 
 const productDataDetail = [
   {
     id: "1",
     title: "Burger",
-    image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
+    image: "../../images/yogurt.jpg",
     description:
       "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
   },
@@ -51,7 +52,7 @@ const productDataDetail = [
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse aliquid qui doloribus maiores nam earum delectus numquam! Quidem est, ab molestias repudiandae repellat voluptas ullam, esse magni doloribus ipsum alias!"
   }
-]
+];
 
 class Products extends PureComponent {
   render() {
@@ -59,8 +60,8 @@ class Products extends PureComponent {
       <div id="products" className="container">
         <ProductsSlider data={productDataDetail} />
       </div>
-    )
+    );
   }
 }
 
-export default Products
+export default Products;
