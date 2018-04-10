@@ -3,8 +3,8 @@ import { Link } from "react-router"
 
 const list = [
   {
-    key: "product",
-    text: "Product",
+    id:"1",
+    title:"Product",
     list: [
       { id: "1", title: "Food" },
       { id: "2", title: "Ice-cream" },
@@ -25,8 +25,8 @@ const list = [
     ]
   },
   {
-    key: "survey",
-    text: "Survey",
+    id: "2",
+    title: "Survey",
     list: [
       { id: "1", title: "User-survey" },
       { id: "2", title: "User-survey event 2" }
@@ -37,11 +37,11 @@ const list = [
 class Home extends PureComponent {
   render() {
     return (
-      <div id="home" className="containter">
+      <div id="home" className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 border-right">
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 border-right">
             <div className="menu">
-              <h2>{list[0].text}</h2>
+              <h2>{list[0].title}</h2>
               <div className="menu-list">
                 {list[0].list.map(item => (
                   <Link className="menu-item" to={`/products/${item.id}`}>
@@ -51,15 +51,15 @@ class Home extends PureComponent {
               </div>
             </div>
           </div>
-          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div className="menu">
-              <h2>{list[1].text}</h2>
+              <h2>{list[1].title}</h2>
               <div className="menu-list">
                 {list[1].list.map(item => (
                   <Link
                     key={item.id}
                     className="menu-item"
-                    to={`/products/${item.id}`}
+                    to={`/surveys/${item.id}`}
                   >
                     {item.title}
                   </Link>
