@@ -51,6 +51,7 @@ class SliderItem extends PureComponent {
                 <div className="item-title">{data.title}</div>
                 <div className="item-description">{data.description}</div>
                 <StarRatingComponent
+                  name="rating1"
                   starCount={5}
                   value={rating}
                   onStarClick={this._handleRating}
