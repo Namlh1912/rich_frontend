@@ -3,6 +3,7 @@ import { Route, IndexRoute } from "react-router"
 import App from "./containers/App"
 import Home from "./containers/Home"
 import Products from "./containers/Products"
+import Surveys from "./containers/Surveys"
 import WithAuth from "./hocs/WithAuth"
 import Login from "./containers/Login"
 import Admin from "./containers/Admin"
@@ -20,6 +21,7 @@ export default (
     <Route name="app" component={App} path="/">
       <IndexRoute component={Home} />
       <Route name="Products" path="/products(/:id)" component={Products} />
+      <Route name="Surveys" path="/surveys(/:id)" component={Surveys} />
       <Route name="AdminLogin" path="/login" component={Login} />
       <Route
         path="/admin"
