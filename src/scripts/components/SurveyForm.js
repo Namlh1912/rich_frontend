@@ -80,7 +80,7 @@ const CustomerInfoForm = () => {
             <label>GHI CHÚ</label>
             <textarea className="form-control customer" id="note" rows="3" />
           </div>
-          <div className="col-lg-12 col-md-12">
+          <div className=" hidden-xs col-lg-12 col-md-12">
             <button type="submit" className="btn btn-primary submit">
               GỬI ĐI
             </button>
@@ -91,54 +91,27 @@ const CustomerInfoForm = () => {
   );
 };
 
-const RadioForm = ({ data }) => {
-  return (
-    <div className="row">
-      <div className="form-group col-md-12">
-        <input
-          type="email"
-          className="form-control feedback"
-          id="email"
-          value={data.question}
-          disabled
-        />
-      </div>
-      <div className="form-group col-xs-12 col-sm-12 col-md-12">
-        <div className="form-group col-xs-12 col-sm-12 col-md-12">
-          {data.answers.map((item, index) => (
-            <label
-              key={index}
-              className="checkbox-wrapper col-xs-6 col-sm-6 col-md-4"
-            >
-              {item.answer}
-              <input type="radio" name={data.id} />
-              <span className="checkmark" />
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CheckboxForm = ({ data }) => {
+const RadioForm = ({ data, id }) => {
   return (
     <div className="row">
       <div className="form-group col-md-12">
         <input
           type="text"
-          className="form-control"
-          id="exampleInputName2"
-          value={data.question}
+          className="form-control question"
+          id="email"
+          value={id + ". " + data.question}
           disabled
         />
       </div>
-      <div className="form-group col-md-12">
+      <div className="form-group col-xs-12 col-sm-12 col-md-12">
         {data.answers.map((item, index) => (
-          <label key={index} class="checkbox-wrapper col-xs-6 col-md-6">
+          <label
+            key={index}
+            className="radio-wrapper col-xs-6 col-sm-6 col-md-4"
+          >
             {item.answer}
-            <input type="checkbox" />
-            <span className="checkmark" />
+            <input type="radio" name={data.id} />
+            <span className="checkmark-radio" />
           </label>
         ))}
       </div>
@@ -146,16 +119,80 @@ const CheckboxForm = ({ data }) => {
   );
 };
 
-const TextareaForm = ({ question }) => {
+const CheckboxForm = ({ data, id }) => {
+  return (
+    <div className="row">
+      <div className="form-group col-md-12">
+        <input
+          type="text"
+          className="form-control question"
+          id="exampleInputName2"
+          value={id + ". " + data.question}
+          disabled
+        />
+      </div>
+      <div className="form-group col-md-12">
+        {data.answers.map((item, index) => (
+          <label
+            key={index}
+            className="checkbox-wrapper col-xs-12 col-sm-12 col-md-6"
+          >
+            {item.answer}
+            <input type="checkbox" />
+            <span className="checkmark" />
+          </label>
+        ))}
+        <label className="checkbox-wrapper col-md-6">
+          <input
+            type="checkbox"
+            onClick={() => this.openOther(`other${data.id}`)}
+          />
+
+          <span className="checkmark" />
+          <input
+            id={`other${data.id}`}
+            style={{ visibility: "hidden" }}
+            type="text"
+            placeholder="Others"
+            className="form-control"
+          />
+        </label>
+      </div>
+    </div>
+  );
+};
+
+{
+  /* <label
+          key={`other${data.id}`}
+          className="checkbox-wrapper col-xs-12 col-sm-12 col-md-6"
+        >
+          Other
+          <input
+            type="checkbox"
+            onClick={() => this.openOther(`other${data.id}`)}
+          />
+          <span className="checkmark" />
+        </label>
+        {data.type === "checkbox" ? (
+          <div id={`other${data.id}`} style={{ visibility: "hidden" }}>
+            ahihi
+          </div>
+        ) : (
+          ""
+        )} */
+}
+
+const TextareaForm = ({ question, id }) => {
   return (
     <div className="form-textarea row">
       <div className="form-group col-md-12">
         <input
           type="text"
-          className="form-control"
+          className="form-control question"
           id="exampleInputName2"
-          value={question}
-          disabled
+          value={id + ". " + question}
+          diabled
         />
         <textarea
           className="form-control answer"
@@ -169,18 +206,22 @@ const TextareaForm = ({ question }) => {
 };
 
 const SurveyForm = ({ data }) => {
+  var count = 0;
   return (
     <div className="form-survey col-md-12">
       <h3>KHẢO SÁT CHẤT LƯỢNG SẢN PHẨM RICH'S</h3>
       <form className=" col-md-offset-1 col-md-10">
         {data.map((item, index) => {
+          count++;
           switch (item.type) {
             case "checkbox":
-              return <CheckboxForm key={index} data={item} />;
+              return <CheckboxForm key={index} data={item} id={count} />;
             case "radio":
-              return <RadioForm key={index} data={item} />;
+              return <RadioForm key={index} data={item} id={count} />;
             case "text":
-              return <TextareaForm key={index} question={item.question} />;
+              return (
+                <TextareaForm key={index} question={item.question} id={count} />
+              );
             default:
               return "";
           }
@@ -204,11 +245,14 @@ class Survey extends PureComponent {
     });
   };
 
+  openOther(selector) {
+    document.getElementById(selector).style.visibility = "visible";
+  }
+
   render() {
     const imgStyle = {
       background: `url(${CakeImg}) no-repeat`,
       backgroundSize: "cover",
-      height: "100vh",
       textAlign: "center",
       backgroundPosition: "center"
     };
@@ -224,6 +268,13 @@ class Survey extends PureComponent {
               <SurveyForm data={this.props.data} />
             </div>
           </div>
+
+          <div class="col-xs-12 hidden-md hidden-sm hidden-lg col-sm-6 hidden-sm col-md-6">
+            <button type="submit" className="btn btn-primary submit-survey">
+              GỬI ĐI
+            </button>
+          </div>
+          <br />
         </div>
       </div>
     );

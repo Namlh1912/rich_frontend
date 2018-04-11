@@ -36,6 +36,50 @@ const surveyDataDetail = [
     question: "Yêu cầu của khách hàng",
     type: "text",
     answer: []
+  },
+  {
+    id: "3",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" },
+      { answer: "Others" }
+    ]
+  },
+  {
+    id: "3",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" },
+      { answer: "Others" }
+    ]
+  },
+  {
+    id: "3",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" },
+      { answer: "Others" }
+    ]
+  },
+  {
+    id: "3",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" },
+      { answer: "Others" }
+    ]
   }
 ];
 
