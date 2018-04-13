@@ -1,3 +1,5 @@
+import callApi from "./api"
+
 const survey = {
   id: "1",
   title: "User-survey",
@@ -23,20 +25,14 @@ const survey = {
   ]
 }
 
-export function getSurvey(id) {
-  if (id) {
-    return dispatch => {
-      dispatch({
-        type: "GET_SURVEY_SUCCESS",
-        res: survey
-      })
-    }
-  }
-
+export function getAllSurveys() {
   return dispatch => {
-    dispatch({
-      type: "GET_SURVEY_FAILURE",
-      error: "Invalid Survey!"
-    })
+    callApi(dispatch, "GET_SURVEYS", "/surveys", {})
+  }
+}
+
+export function getSurvey(id) {
+  return dispatch => {
+    callApi(dispatch, "GET_SURVEY_DETAIL", "/survey/" + id, {})
   }
 }
