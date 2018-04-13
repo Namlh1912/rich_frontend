@@ -16,8 +16,7 @@ const surveyDataDetail = [
       { answer: "TCCS/Kem" },
       { answer: "Bakery mix/ Bột" },
       { answer: "FFIGSS/ Mứt, siro, sốt" },
-      { answer: "Chocolate/ Socola" },
-      { answer: "Other" }
+      { answer: "Chocolate/ Socola" }
     ]
   },
   {
@@ -27,8 +26,7 @@ const surveyDataDetail = [
     answers: [
       { answer: "Beverage/ Các món thức uống" },
       { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
-      { answer: "Culinary/ Các món nấu" },
-      { answer: "Others" }
+      { answer: "Culinary/ Các món nấu" }
     ]
   },
   {
@@ -36,6 +34,46 @@ const surveyDataDetail = [
     question: "Yêu cầu của khách hàng",
     type: "text",
     answer: []
+  },
+  {
+    id: "5",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" }
+    ]
+  },
+  {
+    id: "6",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" }
+    ]
+  },
+  {
+    id: "7",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" }
+    ]
+  },
+  {
+    id: "8",
+    question: "Ứng dụng khách quan tâm",
+    type: "checkbox",
+    answers: [
+      { answer: "Beverage/ Các món thức uống" },
+      { answer: "Cake-Dessert/ Các món bánh - tráng miệng" },
+      { answer: "Culinary/ Các món nấu" }
+    ]
   }
 ];
 
