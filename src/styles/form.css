@@ -51,11 +51,15 @@
 }
 
 #surveys {
+  overflow-x: hidden;
   width: 100%;
   font-size: 13px;
   margin-top: -30px;
 
   .form-customer {
+    padding-left: 25px;
+    padding-right: 25px;
+
     .checkbox-wrapper {
       font-weight: normal;
       display: block;
@@ -68,6 +72,10 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+
+      .otherText {
+        display: none;
+      }
     }
 
     .checkbox-wrapper input[type="checkbox"] {
@@ -86,12 +94,12 @@
       background-color: #39b455;
     }
 
-    /* On mouse-over, add a grey background color */
+    /* On mouse-over, add a background color */
     .checkbox-wrapper:hover input[type="checkbox"] ~ .checkmark {
       background-color: #41b44c;
     }
 
-    /* When the checkbox is checked, add a blue background */
+    /* When the checkbox is checked, add a background */
     .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
       background-color: #39b455;
     }
@@ -106,6 +114,12 @@
     /* Show the checkmark when checked */
     .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
       display: block;
+    }
+
+    .checkbox-wrapper input[type="checkbox"]:checked ~ .otherText {
+      display: block;
+      margin-top: -25px;
+      position: relative;
     }
 
     /* Style the checkmark/indicator */
@@ -145,17 +159,23 @@
   }
 
   .form-survey {
-    h3 {
-      color: white;
-    }
-
-    .form-control[disabled] {
+    .questionBox {
+      width: 100%;
+      display: block;
+      line-height: 1.42857143;
       color: #000000;
+      padding: 6px 12px;
+      font-size: 16px;
+      background-color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      border: 1px solid #ccc;
+      text-align: left;
     }
 
-    .form-control.question {
-      font-size: 14px;
-      font-weight: bold;
+    h3 {
+      padding-top: 20px;
+      color: white;
     }
 
     .form-control.answer {
@@ -179,6 +199,10 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+
+      .form-control.others {
+        height: 25px;
+      }
     }
 
     .checkbox-wrapper input[type="checkbox"] {
@@ -296,5 +320,14 @@
       border-radius: 50%;
       background: white;
     }
+  }
+
+  .hideText {
+    opacity: 0;
+    margin-top: -30px;
+  }
+
+  .hideInput {
+    display: none;
   }
 }

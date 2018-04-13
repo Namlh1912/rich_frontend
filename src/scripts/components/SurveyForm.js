@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import CakeImg from "../../images/cake2.jpg";
 
 const province = [
@@ -53,13 +53,14 @@ const CustomerInfoForm = () => {
               <span className="checkmark" />
             </label>
             <label className="checkbox-wrapper col-md-6">
+              Others
               <input type="checkbox" />
+              <span className="checkmark" />
               <input
                 type="text"
                 placeholder="Others"
-                className="form-control"
+                className="form-control otherText"
               />
-              <span className="checkmark" />
             </label>
           </div>
 
@@ -80,7 +81,7 @@ const CustomerInfoForm = () => {
             <label>GHI CHÚ</label>
             <textarea className="form-control customer" id="note" rows="3" />
           </div>
-          <div className=" hidden-xs col-lg-12 col-md-12">
+          <div className="col-lg-12 hidden-xs hidden-sm col-md-12">
             <button type="submit" className="btn btn-primary submit">
               GỬI ĐI
             </button>
@@ -91,17 +92,11 @@ const CustomerInfoForm = () => {
   );
 };
 
-const RadioForm = ({ data, id }) => {
+const YesNoForm = ({ data, count }) => {
   return (
     <div className="row">
       <div className="form-group col-md-12">
-        <input
-          type="text"
-          className="form-control question"
-          id="email"
-          value={id + ". " + data.question}
-          disabled
-        />
+        <div className="questionBox">{count + ". " + data.question}</div>
       </div>
       <div className="form-group col-xs-12 col-sm-12 col-md-12">
         {data.answers.map((item, index) => (
@@ -119,81 +114,44 @@ const RadioForm = ({ data, id }) => {
   );
 };
 
-const CheckboxForm = ({ data, id }) => {
+const MultipleChoiceForm = ({ data, onClickItem, count }) => {
   return (
     <div className="row">
       <div className="form-group col-md-12">
-        <input
-          type="text"
-          className="form-control question"
-          id="exampleInputName2"
-          value={id + ". " + data.question}
-          disabled
-        />
+        <div className="questionBox">{count + ". " + data.question}</div>
       </div>
       <div className="form-group col-md-12">
         {data.answers.map((item, index) => (
-          <label
-            key={index}
-            className="checkbox-wrapper col-xs-12 col-sm-12 col-md-6"
-          >
+          <label key={index} className="checkbox-wrapper col-xs-12 col-md-6">
             {item.answer}
             <input type="checkbox" />
             <span className="checkmark" />
           </label>
         ))}
-        <label className="checkbox-wrapper col-md-6">
+        <label className="checkbox-wrapper col-xs-12 col-md-6">
           <input
             type="checkbox"
-            onClick={() => this.openOther(`other${data.id}`)}
+            onClick={() => onClickItem(`other${data.id}`)}
           />
-
-          <span className="checkmark" />
+          <p id={`other${data.id}Text`}>Others</p>
           <input
-            id={`other${data.id}`}
-            style={{ visibility: "hidden" }}
             type="text"
+            id={`other${data.id}`}
+            className="form-control others hideInput"
             placeholder="Others"
-            className="form-control"
           />
+          <span className="checkmark" />
         </label>
       </div>
     </div>
   );
 };
 
-{
-  /* <label
-          key={`other${data.id}`}
-          className="checkbox-wrapper col-xs-12 col-sm-12 col-md-6"
-        >
-          Other
-          <input
-            type="checkbox"
-            onClick={() => this.openOther(`other${data.id}`)}
-          />
-          <span className="checkmark" />
-        </label>
-        {data.type === "checkbox" ? (
-          <div id={`other${data.id}`} style={{ visibility: "hidden" }}>
-            ahihi
-          </div>
-        ) : (
-          ""
-        )} */
-}
-
-const TextareaForm = ({ question, id }) => {
+const ShortTextForm = ({ question, count }) => {
   return (
     <div className="form-textarea row">
       <div className="form-group col-md-12">
-        <input
-          type="text"
-          className="form-control question"
-          id="exampleInputName2"
-          value={id + ". " + question}
-          diabled
-        />
+        <div className="questionBox">{count + ". " + question}</div>
         <textarea
           className="form-control answer"
           id="description"
@@ -205,7 +163,7 @@ const TextareaForm = ({ question, id }) => {
   );
 };
 
-const SurveyForm = ({ data }) => {
+const SurveyForm = ({ data, opts }) => {
   var count = 0;
   return (
     <div className="form-survey col-md-12">
@@ -215,12 +173,23 @@ const SurveyForm = ({ data }) => {
           count++;
           switch (item.type) {
             case "checkbox":
-              return <CheckboxForm key={index} data={item} id={count} />;
+              return (
+                <MultipleChoiceForm
+                  onClickItem={selector => opts.openOther(selector)}
+                  key={index}
+                  data={item}
+                  count={count}
+                />
+              );
             case "radio":
-              return <RadioForm key={index} data={item} id={count} />;
+              return <YesNoForm key={index} data={item} count={count} />;
             case "text":
               return (
-                <TextareaForm key={index} question={item.question} id={count} />
+                <ShortTextForm
+                  key={index}
+                  question={item.question}
+                  count={count}
+                />
               );
             default:
               return "";
@@ -231,11 +200,13 @@ const SurveyForm = ({ data }) => {
   );
 };
 
-class Survey extends PureComponent {
+class Survey extends Component {
+  // pureComponent chi danh cho component khong co state
   constructor(props) {
     super(props);
     this.state = {
-      checked: true
+      checked: true,
+      click: false
     };
   }
 
@@ -245,9 +216,23 @@ class Survey extends PureComponent {
     });
   };
 
-  openOther(selector) {
-    document.getElementById(selector).style.visibility = "visible";
-  }
+  onClickHandle = selector => {
+    // this.setState({
+    //   click: !this.state.click
+    // });
+    var x = document.getElementById(selector).classList;
+    var y = document.getElementById(`${selector}Text`).classList;
+    console.log(selector);
+    console.log(x);
+    console.log(x.contains("hideInput"));
+    if (x.contains("hideInput")) {
+      x.remove("hideInput");
+      y.add("hideText");
+    } else {
+      x.add("hideInput");
+      y.remove("hideText");
+    }
+  };
 
   render() {
     const imgStyle = {
@@ -256,6 +241,10 @@ class Survey extends PureComponent {
       textAlign: "center",
       backgroundPosition: "center"
     };
+    const opts = {
+      openOther: selector => this.onClickHandle(selector)
+    };
+    console.log(this.state.click);
     return (
       <div className="row">
         <div className="row">
@@ -265,16 +254,15 @@ class Survey extends PureComponent {
               <br />
             </div>
             <div style={imgStyle} className="blur-background col-lg-8 col-md-8">
-              <SurveyForm data={this.props.data} />
+              <SurveyForm data={this.props.data} opts={opts} />
             </div>
-          </div>
-
-          <div class="col-xs-12 hidden-md hidden-sm hidden-lg col-sm-6 hidden-sm col-md-6">
-            <button type="submit" className="btn btn-primary submit-survey">
+            <button
+              type="submit"
+              className="hidden-md hidden-lg btn btn-primary submit-survey"
+            >
               GỬI ĐI
             </button>
           </div>
-          <br />
         </div>
       </div>
     );
