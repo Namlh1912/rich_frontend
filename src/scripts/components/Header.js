@@ -1,12 +1,16 @@
-import React from "react"
-import Logo from "../../images/logo.png"
+import React from "react";
+import Logo from "../../images/logo.png";
+import { Link } from "react-router";
 
 const Header = () => {
+  // console.log(this.props.location.pathname);
   return (
     <div className="header">
       <div className="container">
         <div className="left">
-          <img src={Logo} alt="Rich logo" className="logo" />
+          <Link className="menu-item" to={`/`}>
+            <img src={Logo} alt="Rich logo" className="logo" />
+          </Link>
         </div>
 
         <div className="right">
@@ -14,7 +18,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

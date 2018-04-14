@@ -50,6 +50,21 @@
   width: 100vw;
 }
 
+.submit-form {
+  text-align: center;
+  margin-top: 70px;
+  .btn-primary.submit-customer-survey {
+    background-image: linear-gradient(
+      to right,
+      #f0851f 0%,
+      #cd1d2b 50%,
+      #841f32 100%
+    );
+    border: none;
+    width: 50vw;
+  }
+}
+
 #surveys {
   overflow-x: hidden;
   width: 100%;
@@ -72,10 +87,19 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+    }
 
-      .otherText {
-        display: none;
-      }
+    .otherText {
+      display: none;
+    }
+
+    .form-control.others {
+      top: 0px;
+      left: 33px;
+      position: absolute;
+      width: 70%;
+      background-color: #eff1f0;
+      color: #000000;
     }
 
     .checkbox-wrapper input[type="checkbox"] {
@@ -119,7 +143,8 @@
     .checkbox-wrapper input[type="checkbox"]:checked ~ .otherText {
       display: block;
       margin-top: -25px;
-      position: relative;
+      position: absolute;
+      z-index: 10;
     }
 
     /* Style the checkmark/indicator */
@@ -138,10 +163,6 @@
     .form-control.customer {
       background-color: #eff1f0;
       border: 1px solid #eff1f0;
-    }
-
-    .form-control.others {
-      width: 60%;
     }
 
     @media all and (max-width: 1025px) {
@@ -165,7 +186,7 @@
       line-height: 1.42857143;
       color: #000000;
       padding: 6px 12px;
-      font-size: 16px;
+      font-size: 15px;
       background-color: white;
       border-radius: 4px;
       font-weight: bold;
@@ -185,6 +206,15 @@
       color: #000000;
     }
 
+    .form-control.others {
+      width: 70%;
+      top: -44px;
+      left: 33px;
+      position: relative;
+      margin-bottom: -20px;
+      color: #000000;
+    }
+
     .checkbox-wrapper {
       text-align: left;
       font-weight: normal;
@@ -199,10 +229,6 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-
-      .form-control.others {
-        height: 25px;
-      }
     }
 
     .checkbox-wrapper input[type="checkbox"] {
@@ -320,11 +346,6 @@
       border-radius: 50%;
       background: white;
     }
-  }
-
-  .hideText {
-    opacity: 0;
-    margin-top: -30px;
   }
 
   .hideInput {

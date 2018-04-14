@@ -1,7 +1,6 @@
-import React, { PureComponent } from "react"
-import Slider from "react-slick"
-import FeedbackForm from "./FeedbackForm"
-import StarRatingComponent from "react-star-rating-component"
+import React, { PureComponent } from "react";
+import Slider from "react-slick";
+import StarRatingComponent from "react-star-rating-component";
 
 const settings = {
   slidesToShow: 1,
@@ -11,32 +10,41 @@ const settings = {
   dots: true,
   infinite: false,
   arrows: false
-}
+};
 
 class SliderItem extends PureComponent {
   state = {
     rating: 0
-  }
+  };
 
   _handleRating = next => {
-    this.setState({ rating: next })
-  }
+    this.setState({ rating: next });
+  };
 
   render() {
-    const { data, index } = this.props
-    const { rating } = this.state
+    const { data, index } = this.props;
+    const { rating } = this.state;
     const imgStyle = {
       background: `url(${data.imgLink}) no-repeat center center`,
       width: "100%",
       paddingBottom: "100%",
       backgroundSize: "cover"
-    }
-
+    };
+    console.log(this.props.customerInfo);
     return data.isNull ? (
       <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
     ) : data.isForm ? (
-      <div className="col-lg-12 col-md-12">
-        <FeedbackForm />
+      <div className="col-xs-12 col-sm-12 col-md-12">
+        <div className="submit-form col-xs-12 col-sm-12 col-md-12">
+          <p>Bạn đã hoàn thành survey!</p>
+          <button
+            type="submit"
+            className="btn btn-primary submit-customer-survey"
+            onClick={() => this._onSubmitCustomerForm()}
+          >
+            Hoàn thành
+          </button>
+        </div>
       </div>
     ) : (
       <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -61,62 +69,70 @@ class SliderItem extends PureComponent {
           </tbody>
         </table>
       </div>
-    )
+    );
   }
 }
 
 const formatData = data => {
-  const numb = 4 - data.length % 4
-  const newData = [...data]
+  const numb = 4 - data.length % 4;
+  const newData = [...data];
 
   if (numb !== 0) {
     for (let i = 0; i < numb; i++) {
       newData.push({
         id: new Date().getTime(),
         isNull: true
-      })
+      });
     }
   }
   newData.push({
     id: new Date().getTime(),
     isForm: true
-  })
+  });
 
-  return newData
-}
+  return newData;
+};
 
 class ProductsSlider extends PureComponent {
   constructor(props) {
-    super(props)
-
+    super(props);
+    console.log(props.data);
     this.state = {
       data: formatData(props.data)
-    }
+    };
   }
 
   componentWillReceiveProps(props) {
-    const { data } = this.props
+    const { data } = this.props;
 
     if (data !== props.data) {
       this.setState({
         data: formatData(props.data)
-      })
+      });
     }
   }
 
   render() {
-    const { data } = this.state
+    const { data } = this.state;
 
     return (
       <div className="products-slider">
         <Slider {...settings}>
           {data.map((item, index) => {
-            return <SliderItem key={item.id} data={item} index={index} />
+            console.log(item);
+            return (
+              <SliderItem
+                key={item.id}
+                data={item}
+                index={index}
+                customerInfo={this.props.customerInfo}
+              />
+            );
           })}
         </Slider>
       </div>
-    )
+    );
   }
 }
 
-export default ProductsSlider
+export default ProductsSlider;

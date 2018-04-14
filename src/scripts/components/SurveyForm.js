@@ -15,7 +15,7 @@ const province = [
   { key: "HA", text: "Hội An" }
 ];
 
-const CustomerInfoForm = () => {
+const CustomerInfoForm = ({ opts }) => {
   return (
     <div className="form-customer ">
       <h3 className="customer col-lg-12 col-md-12">THÔNG TIN KHÁCH HÀNG</h3>
@@ -52,16 +52,25 @@ const CustomerInfoForm = () => {
               <input type="checkbox" />
               <span className="checkmark" />
             </label>
-            <label className="checkbox-wrapper col-md-6">
-              Others
-              <input type="checkbox" />
-              <span className="checkmark" />
-              <input
-                type="text"
+            <div className="col-md-6" style={{ paddingLeft: 0 }}>
+              <label
+                className="checkbox-wrapper col-md-6"
+                style={{ display: "inline-block" }}
+              >
+                <p id={"other0Text"}>Others</p>
+                <input
+                  type="checkbox"
+                  onClick={() => opts.openOther(`other0`)}
+                />
+                <span className="checkmark" />
+              </label>
+              <textarea
+                rows={2}
+                id={"other0"}
                 placeholder="Others"
-                className="form-control otherText"
+                className="form-control others hideInput"
               />
-            </label>
+            </div>
           </div>
 
           <div className="form-group col-lg-6 col-md-6">
@@ -114,7 +123,25 @@ const YesNoForm = ({ data, count }) => {
   );
 };
 
-const MultipleChoiceForm = ({ data, onClickItem, count }) => {
+const OthersInput = ({ data, onClickItem }) => {
+  return (
+    <div className="col-xs-12 col-md-6" style={{ paddingLeft: 0 }}>
+      <label className="checkbox-wrapper col-xs-12 col-md-6">
+        <input type="checkbox" onClick={() => onClickItem(`other${data.id}`)} />
+        <p id={`other${data.id}Text`}>Others</p>
+        <span className="checkmark" />
+      </label>
+      <textarea
+        rows="2"
+        id={`other${data.id}`}
+        className="col-xs-12 col-md-6 form-control others hideInput"
+        placeholder="Others"
+      />
+    </div>
+  );
+};
+
+const MultipleChoiceForm = ({ data, opts, count }) => {
   return (
     <div className="row">
       <div className="form-group col-md-12">
@@ -128,20 +155,10 @@ const MultipleChoiceForm = ({ data, onClickItem, count }) => {
             <span className="checkmark" />
           </label>
         ))}
-        <label className="checkbox-wrapper col-xs-12 col-md-6">
-          <input
-            type="checkbox"
-            onClick={() => onClickItem(`other${data.id}`)}
-          />
-          <p id={`other${data.id}Text`}>Others</p>
-          <input
-            type="text"
-            id={`other${data.id}`}
-            className="form-control others hideInput"
-            placeholder="Others"
-          />
-          <span className="checkmark" />
-        </label>
+        <OthersInput
+          data={data}
+          onClickItem={selector => opts.openOther(selector)}
+        />
       </div>
     </div>
   );
@@ -175,7 +192,7 @@ const SurveyForm = ({ data, opts }) => {
             case "checkbox":
               return (
                 <MultipleChoiceForm
-                  onClickItem={selector => opts.openOther(selector)}
+                  opts={opts}
                   key={index}
                   data={item}
                   count={count}
@@ -201,7 +218,6 @@ const SurveyForm = ({ data, opts }) => {
 };
 
 class Survey extends Component {
-  // pureComponent chi danh cho component khong co state
   constructor(props) {
     super(props);
     this.state = {
@@ -217,14 +233,9 @@ class Survey extends Component {
   };
 
   onClickHandle = selector => {
-    // this.setState({
-    //   click: !this.state.click
-    // });
     var x = document.getElementById(selector).classList;
     var y = document.getElementById(`${selector}Text`).classList;
-    console.log(selector);
-    console.log(x);
-    console.log(x.contains("hideInput"));
+
     if (x.contains("hideInput")) {
       x.remove("hideInput");
       y.add("hideText");
@@ -244,13 +255,13 @@ class Survey extends Component {
     const opts = {
       openOther: selector => this.onClickHandle(selector)
     };
-    console.log(this.state.click);
+
     return (
       <div className="row">
         <div className="row">
           <div className="col-lg-12 col-md-12">
             <div className="col-lg-4 col-md-4">
-              <CustomerInfoForm />
+              <CustomerInfoForm opts={opts} />
               <br />
             </div>
             <div style={imgStyle} className="blur-background col-lg-8 col-md-8">
@@ -259,6 +270,7 @@ class Survey extends Component {
             <button
               type="submit"
               className="hidden-md hidden-lg btn btn-primary submit-survey"
+              style={{ borderRadius: 0 }}
             >
               GỬI ĐI
             </button>

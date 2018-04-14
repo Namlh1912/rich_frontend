@@ -1,9 +1,9 @@
-import React, { PureComponent } from "react"
-import { Link } from "react-router"
-import { getAllCategories } from "../actions/category"
-import { getAllSurveys } from "../actions/survey"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
+import React, { PureComponent } from "react";
+import { Link } from "react-router";
+import { getAllCategories } from "../actions/category";
+import { getAllSurveys } from "../actions/survey";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 const list = [
   {
@@ -36,7 +36,7 @@ const list = [
       { id: "2", title: "User-survey event 2" }
     ]
   }
-]
+];
 
 @connect(
   state => ({
@@ -51,17 +51,21 @@ const list = [
 )
 class Home extends PureComponent {
   render() {
-    const { categories, surveys } = this.props
+    const { categories, surveys } = this.props;
 
     return (
       <div id="home" className="container">
-        <div className="row">
+        <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
           <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 border-right">
             <div className="menu">
               <h2>Products</h2>
               <div className="menu-list">
                 {categories.map(cate => (
-                  <Link className="menu-item" to={`/category/${cate.id}`}>
+                  <Link
+                    key={cate.id}
+                    className="menu-item"
+                    to={`/category/${cate.id}`}
+                  >
                     {cate.name}
                   </Link>
                 ))}
@@ -86,15 +90,15 @@ class Home extends PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   componentDidMount() {
-    const { getAllCategories, getAllSurveys } = this.props
+    const { getAllCategories, getAllSurveys } = this.props;
 
-    getAllCategories()
-    getAllSurveys()
+    getAllCategories();
+    getAllSurveys();
   }
 }
 
-export default Home
+export default Home;
