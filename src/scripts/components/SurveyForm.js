@@ -218,7 +218,6 @@ const SurveyForm = ({ data, opts }) => {
 };
 
 class Survey extends Component {
-  // pureComponent chi danh cho component khong co state
   constructor(props) {
     super(props);
     this.state = {
@@ -236,9 +235,7 @@ class Survey extends Component {
   onClickHandle = selector => {
     var x = document.getElementById(selector).classList;
     var y = document.getElementById(`${selector}Text`).classList;
-    console.log(selector);
-    console.log(x);
-    console.log(x.contains("hideInput"));
+
     if (x.contains("hideInput")) {
       x.remove("hideInput");
       y.add("hideText");
@@ -258,8 +255,7 @@ class Survey extends Component {
     const opts = {
       openOther: selector => this.onClickHandle(selector)
     };
-    console.log(this.state.click);
-    console.log(this.props.customerInfo);
+
     return (
       <div className="row">
         <div className="row">
