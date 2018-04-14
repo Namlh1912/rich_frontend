@@ -1,5 +1,8 @@
 import React, { PureComponent } from "react"
 import Modal from "react-responsive-modal"
+import { addNewSurvey } from "../actions/survey"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 
 const questionTypes = ["normal", "radio", "checkbox"]
 
@@ -158,6 +161,14 @@ class ModalQuestion extends PureComponent {
   }
 }
 
+@connect(
+  state => ({
+    isLoading: state.survey.isLoading
+  }),
+  dispatch => ({
+    addNewSurvey: bindActionCreators(addNewSurvey, dispatch)
+  })
+)
 class AdminSurveyNew extends PureComponent {
   constructor(props) {
     super(props)
@@ -232,7 +243,12 @@ class AdminSurveyNew extends PureComponent {
             {oldData ? (
               <button className="btn btn-primary">Confirm Edit</button>
             ) : (
-              <button className="btn btn-primary">Add New Survey</button>
+              <button
+                className="btn btn-primary"
+                onClick={this._handleCreateSurvey}
+              >
+                Create Survey
+              </button>
             )}
           </div>
         )}
@@ -247,9 +263,16 @@ class AdminSurveyNew extends PureComponent {
     })
   }
 
+  _handleCreateSurvey = e => {
+    e.preventDefault()
+
+    console.log(this.state.data)
+    addNewSurvey(this.state.data)
+  }
+
   _handleAddQuestion = question => {
     const { data } = this.state
-    const newId = data[data.length - 1].id + 1
+    const newId = !!data.length ? data[data.length - 1].id + 1 : 1
 
     return this.setState({
       data: data.concat({ ...question, id: newId }),

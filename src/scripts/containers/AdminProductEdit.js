@@ -1,8 +1,35 @@
 import AdminProductNew from "./AdminProductNew"
-import React from "react"
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import { getProduct } from "../actions/product"
 
-const AdminProductEdit = props => {
-  return <AdminProductNew {...props} />
+@connect(
+  (state, props) => ({
+    isLoading: state.product.isLoading,
+    product: state.product.data,
+    productId: parseInt(props.params.id, 10)
+  }),
+  dispatch => ({
+    getProduct: bindActionCreators(getProduct, dispatch)
+  })
+)
+class AdminProductEdit extends PureComponent {
+  render() {
+    const { product, productId, params } = this.props
+
+    return product && product.id === productId ? (
+      <AdminProductNew data={product} params={params} />
+    ) : (
+      <div>Loading...</div>
+    )
+  }
+
+  componentDidMount() {
+    const { getProduct, productId } = this.props
+
+    getProduct(productId)
+  }
 }
 
 export default AdminProductEdit

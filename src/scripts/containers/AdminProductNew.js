@@ -1,42 +1,42 @@
 import React, { PureComponent } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import { getProduct } from "../actions/product"
+import { addNewProduct, editProduct, deleteProduct } from "../actions/product"
 import Image from "../../images/default-image.jpg"
+import ConfirmModal from "../components/ConfirmModal"
 
 @connect(
   (state, props) => ({
-    product: state.product.data,
-    productId: props.params.id && props.params.id.split("_")[0],
-    categoryId: props.params.id && props.params.id.split("_")[1]
+    isLoading: state.product.isLoading,
+    categoryId: parseInt(props.params.id, 10)
   }),
   dispatch => ({
-    getProduct: bindActionCreators(getProduct, dispatch)
+    addNewProduct: bindActionCreators(addNewProduct, dispatch),
+    editProduct: bindActionCreators(editProduct, dispatch),
+    deleteProduct: bindActionCreators(deleteProduct, dispatch)
   })
 )
 class AdminProductNew extends PureComponent {
   state = {
-    data: null
+    open: false
   }
 
   render() {
-    const { params } = this.props
-    const { data } = this.state
+    const { data, isLoading } = this.props
+    const { open } = this.state
 
     return (
       <div className="container form-wrapper">
         <div id="product-form">
-          <h1>{`${params.id ? "Edit" : "New"} Product`}</h1>
+          <h1>{`${data ? "Edit" : "New"} Product`}</h1>
           <form
             className="text-center"
-            onSubmit={
-              params.id ? this._handleEditProduct : this._handleAddProduct
-            }
+            onSubmit={data ? this._handleEditProduct : this._handleAddProduct}
           >
             <div className="form-group">
               <img
                 ref={node => (this.preview = node)}
-                src={(data && data.image) || Image}
+                src={(data && data.imgLink) || Image}
                 alt="Preview"
               />
             </div>
@@ -56,7 +56,7 @@ class AdminProductNew extends PureComponent {
                   type="text"
                   className="form-control"
                   id="name"
-                  defaultValue={data.title}
+                  defaultValue={data.name}
                   placeholder={"Product Name"}
                 />
               ) : (
@@ -88,23 +88,51 @@ class AdminProductNew extends PureComponent {
               )}
             </div>
           </form>
-          {params.id ? (
-            <button type="submit" className="btn btn-primary">
+          {data ? (
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-primary"
+              onClick={this._handleEditProduct}
+            >
               Edit
             </button>
           ) : (
             <div className="text-center">
-              <button type="submit" className="btn btn-primary text-center">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn btn-primary text-center"
+                onClick={this._handleAddProduct}
+              >
                 Add
               </button>
             </div>
           )}
-          {params.id && (
-            <button className="btn btn-danger pull-right">Delete</button>
+          {data && (
+            <button
+              className="btn btn-danger pull-right"
+              disabled={isLoading}
+              onClick={this._handleOpenModal}
+            >
+              Delete
+            </button>
           )}
         </div>
+        <ConfirmModal
+          open={open}
+          onClose={this._handleCloseModal}
+          onConfirm={this._handleDeleteProduct}
+          message="Are you sure to delete this product?"
+        />
       </div>
     )
+  }
+
+  _handleDeleteProduct = () => {
+    const { data, deleteProduct } = this.props
+
+    deleteProduct(data.id)
   }
 
   _handleImageChange = node => {
@@ -123,21 +151,44 @@ class AdminProductNew extends PureComponent {
 
   _handleAddProduct = e => {
     e.preventDefault()
+    const { addNewProduct, categoryId } = this.props
+
+    addNewProduct({
+      name: this.name.value,
+      description: this.description.value,
+      categoryId: categoryId,
+      file: this.preview.src
+    })
   }
 
   _handleEditProduct = e => {
     e.preventDefault()
+    const { editProduct, categoryId, data } = this.props
+
+    editProduct({
+      name: this.name.value,
+      id: data.id,
+      categoryId,
+      file: this.preview.src,
+      description: this.description.value
+    })
   }
 
-  componentWillReceiveProps(props) {
-    const { params, productId, categoryId } = this.props
+  _handleCloseModal = () =>
+    this.setState({
+      open: false
+    })
 
-    if (params.id) {
-      if (
-        props.product &&
-        productId === props.product.id &&
-        categoryId === props.product.category
-      ) {
+  _handleOpenModal = () =>
+    this.setState({
+      open: true
+    })
+
+  componentWillReceiveProps(props) {
+    const { productId } = this.props
+
+    if (productId) {
+      if (props.product && productId === props.product.id) {
         this.setState({
           data: props.product
         })
@@ -146,10 +197,10 @@ class AdminProductNew extends PureComponent {
   }
 
   componentDidMount() {
-    const { productId, categoryId, getProduct } = this.props
+    const { productId, getProduct } = this.props
 
-    if (productId && categoryId) {
-      getProduct(productId, categoryId)
+    if (productId) {
+      getProduct(productId)
     }
   }
 }

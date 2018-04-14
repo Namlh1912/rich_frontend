@@ -1,26 +1,43 @@
-const product = {
-  id: "1",
-  category: "1",
-  title: "Burger",
-  image: "https://www.milkmaid.in/Images/Recipe/Chocolate%20694x400_11.JPG",
-  description:
-    "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum "
+import callApi from "./api"
+
+export function getProduct(id) {
+  return dispatch => {
+    callApi(dispatch, "GET_PRODUCT", "/products/" + id)
+  }
 }
 
-export function getProduct(id, cate) {
-  if (id && cate) {
-    return dispatch => {
-      dispatch({
-        type: "GET_PRODUCT_SUCCESS",
-        res: product
-      })
-    }
-  }
-
+export function editProduct(data) {
   return dispatch => {
-    dispatch({
-      type: "GET_PRODUCT_FAILURE",
-      error: "Invalid Product!"
+    callApi(dispatch, "EDIT_PRODUCT", "/products/" + data.id, {
+      method: "PUT",
+      body: data
+    })
+  }
+}
+
+export function deleteProduct(id) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "DELETE_PRODUCT", "/products/" + id, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`
+      }
+    })
+  }
+}
+
+export function addNewProduct(product) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "ADD_NEW_PRODUCT", "/products/", {
+      method: "POST",
+      body: product,
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`
+      }
     })
   }
 }

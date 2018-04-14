@@ -20,7 +20,7 @@ export default (
   <Route>
     <Route name="app" component={App} path="/">
       <IndexRoute component={Home} />
-      <Route name="Category" path="/category(/:id)" component={Category} />
+      <Route name="Category" path="/categories(/:id)" component={Category} />
       <Route name="Surveys" path="/surveys(/:id)" component={Surveys} />
       <Route name="AdminLogin" path="/login" component={Login} />
       <Route
@@ -47,12 +47,12 @@ export default (
         />
         <Route
           name="ProductEdit"
-          path="/admin/products(/:id)/edit"
+          path="/admin/categories(/:id)/products(/:id)/edit"
           component={AdminProductEdit}
         />
         <Route
           name="ProductNew"
-          path="/admin/products(/:id)/new"
+          path="/admin/categories(/:id)/products/new"
           component={AdminProductNew}
         />
         <Route

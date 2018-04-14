@@ -11,3 +11,12 @@ export function getCategoryDetail(cateId) {
     callApi(dispatch, "GET_CATEGORY_DETAIL", `/categories/${cateId}`)
   }
 }
+
+export function createNewCategory(name) {
+  return dispatch => {
+    callApi(dispatch, "NEW_CATEGORY", "/categories", {
+      method: "POST",
+      body: { name }
+    })
+  }
+}

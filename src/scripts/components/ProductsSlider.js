@@ -61,7 +61,7 @@ class SliderItem extends PureComponent {
                 <StarRatingComponent
                   name="rating1"
                   starCount={5}
-                  value={data.rates}
+                  value={rating}
                   onStarClick={this._handleRating}
                 />
               </td>
@@ -98,8 +98,9 @@ class ProductsSlider extends PureComponent {
     super(props);
     console.log(props.data);
     this.state = {
-      data: formatData(props.data)
-    };
+      data:
+        props.data && props.data.length ? formatData(props.data) : props.data
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -107,15 +108,16 @@ class ProductsSlider extends PureComponent {
 
     if (data !== props.data) {
       this.setState({
-        data: formatData(props.data)
-      });
+        data:
+          props.data && props.data.length ? formatData(props.data) : props.data
+      })
     }
   }
 
   render() {
     const { data } = this.state;
 
-    return (
+    return !!data.length ? (
       <div className="products-slider">
         <Slider {...settings}>
           {data.map((item, index) => {
@@ -131,7 +133,11 @@ class ProductsSlider extends PureComponent {
           })}
         </Slider>
       </div>
-    );
+    ) : (
+      <div className="container">
+        <h3>Không tồn tại sản phẩm!</h3>
+      </div>
+    )
   }
 }
 

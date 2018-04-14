@@ -9,6 +9,7 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "GET_CATEGORIES":
     case "GET_CATEGORY_DETAIL":
+    case "NEW_CATEGORY":
       return {
         ...state,
         isLoading: true,
@@ -31,6 +32,13 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
         error: null
       }
 
+    case "NEW_CATEGORY_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        error: null
+      }
+
     case "GET_CATEGORIES_FAILURE":
       return {
         ...state,
@@ -44,6 +52,13 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
         category: null,
+        error: action.error
+      }
+
+    case "NEW_CATEGORY_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
         error: action.error
       }
 

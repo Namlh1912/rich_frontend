@@ -9,6 +9,7 @@ export default function surveyReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "GET_SURVEY_DETAIL":
     case "GET_SURVEYS":
+    case "ADD_NEW_SURVEY":
       return {
         ...state,
         isLoading: true,
@@ -44,6 +45,12 @@ export default function surveyReducer(state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
         surveys: [],
+        error: action.error
+      }
+    case "ADD_NEW_SURVEY_FAILURE":
+      return {
+        ...state,
+        isLoading: false,
         error: action.error
       }
 
