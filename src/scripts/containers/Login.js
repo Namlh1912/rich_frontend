@@ -1,9 +1,9 @@
-import React, { PureComponent } from "react"
-import { Link } from "react-router"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import { login } from "../actions/auth"
-import { routerActions } from "react-router-redux"
+import React, { PureComponent } from "react";
+import { Link } from "react-router";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { login } from "../actions/auth";
+import { routerActions } from "react-router-redux";
 
 @connect(
   state => ({
@@ -18,7 +18,7 @@ import { routerActions } from "react-router-redux"
 )
 class Login extends PureComponent {
   render() {
-    const { error } = this.props
+    const { error } = this.props;
 
     return (
       <div className="container form-wrapper">
@@ -57,28 +57,28 @@ class Login extends PureComponent {
           </form>
         </div>
       </div>
-    )
+    );
   }
 
   _handleUserLogin = e => {
-    e.preventDefault()
-    const email = this.email.value
-    const password = this.password.value
+    e.preventDefault();
+    const email = this.email.value;
+    const password = this.password.value;
 
-    this.props.login(email, password)
-  }
+    this.props.login(email, password);
+  };
 
   componentDidMount() {
-    const { token } = this.props
+    const { token } = this.props;
 
-    token && this.props.router.push("/admin")
+    token && this.props.router.push("/admin");
   }
 
   componentDidUpdate() {
-    const { token } = this.props
+    const { token } = this.props;
 
-    token && this.props.router.push("/admin")
+    token && this.props.router.push("/admin");
   }
 }
 
-export default Login
+export default Login;
