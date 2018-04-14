@@ -7,16 +7,39 @@ export function getAllSurveys() {
 }
 
 export function addNewSurvey(data) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const state = getState()
+
     callApi(dispatch, "ADD_NEW_SURVEY", "/surveys", {
       method: "POST",
-      body: data
+      body: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`,
+        "Content-Type": "application/json"
+      },
+      type: "json"
+    })
+  }
+}
+
+export function editSurvey(data) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "EDIT_SURVEY", "/surveys", {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`,
+        "Content-Type": "application/json"
+      },
+      type: "json"
     })
   }
 }
 
 export function getSurvey(id) {
   return dispatch => {
-    callApi(dispatch, "GET_SURVEY_DETAIL", "/survey/" + id)
+    callApi(dispatch, "GET_SURVEY_DETAIL", "/surveys/" + id)
   }
 }

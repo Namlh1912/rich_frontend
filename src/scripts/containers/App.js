@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import "../../styles/app.css"
 import { ToastContainer } from "react-toastify"
+import config from "../../config.json"
 
 class App extends PureComponent {
   render() {
@@ -14,6 +15,10 @@ class App extends PureComponent {
         <Footer />
       </div>
     )
+  }
+
+  componentWillMount() {
+    window.__BASE_IMG_URL__ = config.SERVER_URL + "/images/upload/thumbnail-"
   }
 }
 

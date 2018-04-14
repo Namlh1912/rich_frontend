@@ -36,19 +36,21 @@ class AdminProductNew extends PureComponent {
             <div className="form-group">
               <img
                 ref={node => (this.preview = node)}
-                src={(data && data.imgLink) || Image}
+                src={(data && window.__BASE_IMG_URL__ + data.imgLink) || Image}
                 alt="Preview"
               />
             </div>
-            <div className="form-group">
-              <input
-                ref={node => (this.image = node)}
-                type="file"
-                onChange={this._handleImageChange}
-                className="form-control"
-                id="name"
-              />
-            </div>
+            {!data && (
+              <div className="form-group">
+                <input
+                  ref={node => (this.image = node)}
+                  type="file"
+                  onChange={this._handleImageChange}
+                  className="form-control"
+                  id="name"
+                />
+              </div>
+            )}
             <div className="form-group">
               {data ? (
                 <input
@@ -89,14 +91,16 @@ class AdminProductNew extends PureComponent {
             </div>
           </form>
           {data ? (
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="btn btn-primary"
-              onClick={this._handleEditProduct}
-            >
-              Edit
-            </button>
+            <div className="text-center">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="btn btn-primary"
+                onClick={this._handleEditProduct}
+              >
+                Edit
+              </button>
+            </div>
           ) : (
             <div className="text-center">
               <button
@@ -109,7 +113,7 @@ class AdminProductNew extends PureComponent {
               </button>
             </div>
           )}
-          {data && (
+          {/* {data && (
             <button
               className="btn btn-danger pull-right"
               disabled={isLoading}
@@ -117,7 +121,7 @@ class AdminProductNew extends PureComponent {
             >
               Delete
             </button>
-          )}
+          )} */}
         </div>
         <ConfirmModal
           open={open}
@@ -157,7 +161,7 @@ class AdminProductNew extends PureComponent {
       name: this.name.value,
       description: this.description.value,
       categoryId: categoryId,
-      file: this.preview.src
+      file: this.image.files[0]
     })
   }
 
@@ -169,7 +173,6 @@ class AdminProductNew extends PureComponent {
       name: this.name.value,
       id: data.id,
       categoryId,
-      file: this.preview.src,
       description: this.description.value
     })
   }

@@ -47,7 +47,7 @@ export default (
         />
         <Route
           name="ProductEdit"
-          path="/admin/categories(/:id)/products(/:id)/edit"
+          path="/admin/categories(/:id)/products(/:productId)/edit"
           component={AdminProductEdit}
         />
         <Route

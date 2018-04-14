@@ -24,8 +24,24 @@ export default function productReducer(state = INITIAL_STATE, action) {
         error: null
       }
 
+    case "EDIT_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        data: action.result,
+        error: null
+      }
+
+    case "ADD_NEW_PRODUCT_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        error: null
+      }
+
     case "GET_PRODUCT_FAILURE":
     case "DELETE_PRODUCT_FAILURE":
+    case "ADD_NEW_PRODUCT_FAILURE":
       return {
         ...state,
         isLoading: false,

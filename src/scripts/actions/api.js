@@ -1,5 +1,6 @@
 import { toast } from "react-toastify"
-const BASE_URL = "https://richapi.herokuapp.com"
+import config from "../../config.json"
+const BASE_URL = config.SERVER_URL
 
 function parseFormData(data) {
   const formData = new FormData()
@@ -24,12 +25,18 @@ export default function callApi(dispatch, actionType, url, opts = {}) {
 
   opts.method && (req.method = opts.method)
   opts.headers && (req.headers = opts.headers)
-  opts.body && (req.body = parseFormData(opts.body))
+  opts.body &&
+    (req.body = opts.type === "json" ? opts.body : parseFormData(opts.body))
 
   dispatch({ type: request })
 
   fetch(apiServer + url, req)
-    .then(res => res.json())
+    .then(res => {
+      if (res.status === 204) {
+        return res
+      }
+      return res.json()
+    })
     .then(res => {
       if (res.name === "Error") {
         toast.error(res.message, { autoClose: 2000 })
@@ -41,6 +48,7 @@ export default function callApi(dispatch, actionType, url, opts = {}) {
         if (
           opts.method === "POST" ||
           opts.method === "PUT" ||
+          opts.method === "PATCH" ||
           opts.method === "DELETE"
         ) {
           toast.success("Thành công!", { autoClose: 2000 })
@@ -52,6 +60,7 @@ export default function callApi(dispatch, actionType, url, opts = {}) {
       }
     })
     .catch(res => {
+      toast.error("Error! Please try again!", { autoClose: 2000 })
       dispatch({
         type: failure,
         error: "Error! Please try again!"

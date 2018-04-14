@@ -10,10 +10,19 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
     case "GET_CATEGORIES":
     case "GET_CATEGORY_DETAIL":
     case "NEW_CATEGORY":
+    case "EDIT_CATEGORY":
       return {
         ...state,
         isLoading: true,
         error: null
+      }
+
+    case "EDIT_CATEGORY_SUCCESS":
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        category: null
       }
 
     case "GET_CATEGORIES_SUCCESS":
@@ -55,6 +64,7 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
         error: action.error
       }
 
+    case "EDIT_CATEGORY_FAILURE":
     case "NEW_CATEGORY_FAILURE":
       return {
         ...state,

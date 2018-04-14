@@ -8,7 +8,7 @@ import { getProduct } from "../actions/product"
   (state, props) => ({
     isLoading: state.product.isLoading,
     product: state.product.data,
-    productId: parseInt(props.params.id, 10)
+    productId: parseInt(props.params.productId, 10)
   }),
   dispatch => ({
     getProduct: bindActionCreators(getProduct, dispatch)

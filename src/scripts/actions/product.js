@@ -7,10 +7,15 @@ export function getProduct(id) {
 }
 
 export function editProduct(data) {
-  return dispatch => {
-    callApi(dispatch, "EDIT_PRODUCT", "/products/" + data.id, {
-      method: "PUT",
-      body: data
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "EDIT_PRODUCT", "/products/", {
+      method: "PATCH",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`
+      }
     })
   }
 }

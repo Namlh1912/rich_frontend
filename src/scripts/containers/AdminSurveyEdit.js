@@ -5,44 +5,37 @@ import AdminSurveyNew from "./AdminSurveyNew"
 import { getSurvey } from "../actions/survey"
 
 @connect(
-  state => ({
-    survey: state.survey.data
+  (state, props) => ({
+    survey: state.survey.survey,
+    surveyId: parseInt(props.params.id, 10),
+    isLoading: state.survey.isLoading
   }),
   dispatch => ({
     getSurvey: bindActionCreators(getSurvey, dispatch)
   })
 )
 class AdminSurveyEdit extends PureComponent {
-  constructor() {
-    super()
-
-    this.state = {
-      data: null
-    }
-  }
-
   render() {
-    const { data } = this.state
+    const { survey, surveyId } = this.props
 
-    return data ? <AdminSurveyNew data={data} /> : <div>Loading...</div>
+    return survey && survey.id === surveyId ? (
+      <AdminSurveyNew data={survey} />
+    ) : (
+      <div>Loading...</div>
+    )
   }
 
   componentWillReceiveProps(props) {
-    const { params } = this.props
-
-    if (params.id) {
-      if (props.survey && params.id === props.survey.id) {
-        this.setState({
-          data: props.survey
-        })
-      }
+    const { survey, isLoading, getSurvey, surveyId } = this.props
+    if (!props.survey && survey && !props.isLoading && isLoading) {
+      getSurvey(surveyId)
     }
   }
 
   componentDidMount() {
-    const { getSurvey, params } = this.props
+    const { getSurvey, surveyId } = this.props
 
-    getSurvey(params.id)
+    getSurvey(surveyId)
   }
 }
 

@@ -25,7 +25,8 @@ class SliderItem extends PureComponent {
     const { data, index } = this.props;
     const { rating } = this.state;
     const imgStyle = {
-      background: `url(${data.imgLink}) no-repeat center center`,
+      background: `url(${window.__BASE_IMG_URL__ +
+        data.imgLink}) no-repeat center center`,
       width: "100%",
       paddingBottom: "100%",
       backgroundSize: "cover"

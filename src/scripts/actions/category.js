@@ -6,6 +6,17 @@ export function getAllCategories() {
   }
 }
 
+export function editCategory(cate) {
+  return dispatch => {
+    callApi(dispatch, "EDIT_CATEGORY", "/categories", {
+      method: "PATCH",
+      body: {
+        ...cate
+      }
+    })
+  }
+}
+
 export function getCategoryDetail(cateId) {
   return dispatch => {
     callApi(dispatch, "GET_CATEGORY_DETAIL", `/categories/${cateId}`)
