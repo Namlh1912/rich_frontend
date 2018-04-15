@@ -82,7 +82,7 @@ class SliderItem extends PureComponent {
 }
 
 const formatData = data => {
-  const numb = 4 - data.length % 4
+  const numb = data.length % 4 !== 0 ? 4 - data.length % 4 : 0
   const newData = [...data]
 
   if (numb !== 0) {
