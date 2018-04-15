@@ -32,6 +32,9 @@ export default function callApi(dispatch, actionType, url, opts = {}) {
 
   fetch(apiServer + url, req)
     .then(res => {
+      if (opts.resType === "text") {
+        return res.text()
+      }
       if (res.status === 204) {
         return res
       }
@@ -57,6 +60,9 @@ export default function callApi(dispatch, actionType, url, opts = {}) {
           type: success,
           result: res.data || res
         })
+        if (opts.callBack) {
+          opts.callBack(res)
+        }
       }
     })
     .catch(res => {

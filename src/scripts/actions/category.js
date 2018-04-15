@@ -6,6 +6,22 @@ export function getAllCategories() {
   }
 }
 
+export function downloadRate() {
+  return dispatch => {
+    callApi(dispatch, "GET_RATES", "/rates", {
+      callBack: text => {
+        const filename = "export.csv"
+        const data = encodeURI("data:text/csv;charset=utf-8," + text)
+        const link = document.createElement("a")
+        link.setAttribute("href", data)
+        link.setAttribute("download", filename)
+        link.click()
+      },
+      resType: "text"
+    })
+  }
+}
+
 export function submitRate(data) {
   return dispatch => {
     callApi(dispatch, "SUBMIT_RATE", "/rates", {

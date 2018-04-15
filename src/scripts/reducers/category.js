@@ -12,6 +12,7 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
     case "NEW_CATEGORY":
     case "EDIT_CATEGORY":
     case "SUBMIT_RATE":
+    case "GET_RATES":
       return {
         ...state,
         isLoading: true,
@@ -44,6 +45,7 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
 
     case "NEW_CATEGORY_SUCCESS":
     case "SUBMIT_RATE_SUCCESS":
+    case "GET_RATES_SUCCESS":
       return {
         ...state,
         isLoading: false,
@@ -69,6 +71,7 @@ export default function categoryReducer(state = INITIAL_STATE, action) {
     case "EDIT_CATEGORY_FAILURE":
     case "NEW_CATEGORY_FAILURE":
     case "SUBMIT_RATE_FAILURE":
+    case "GET_RATES_FAILURE":
       return {
         ...state,
         isLoading: false,
