@@ -99,7 +99,7 @@ class CustomerInfoForm extends PureComponent {
               />
             </div>
             <div className="col-lg-12 hidden-xs hidden-sm col-md-12">
-              <button onSubmit={onSubmit} className="btn btn-primary submit">
+              <button onClick={onSubmit} className="btn btn-primary submit">
                 GỬI ĐI
               </button>
             </div>
