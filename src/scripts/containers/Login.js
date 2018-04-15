@@ -26,14 +26,14 @@ class Login extends PureComponent {
           <h1>Login Form</h1>
           <form onSubmit={this._handleUserLogin}>
             <div className="form-group">
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="username">Username</label>
               <input
-                ref={node => (this.email = node)}
-                type="email"
+                ref={node => (this.username = node)}
+                type="text"
                 className="form-control"
-                id="email"
-                placeholder="Email"
-                autoComplete="email"
+                id="username"
+                placeholder="Username"
+                autoComplete="username"
               />
             </div>
             <div className="form-group">
@@ -61,12 +61,12 @@ class Login extends PureComponent {
   }
 
   _handleUserLogin = e => {
-    e.preventDefault();
-    const email = this.email.value;
-    const password = this.password.value;
+    e.preventDefault()
+    const username = this.username.value
+    const password = this.password.value
 
-    this.props.login(email, password);
-  };
+    this.props.login(username, password)
+  }
 
   componentDidMount() {
     const { token } = this.props;

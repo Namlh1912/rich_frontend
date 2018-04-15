@@ -1,8 +1,19 @@
 import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import { createNewCategory } from "../actions/category"
 
+@connect(
+  state => ({
+    isLoading: state.category.isLoading
+  }),
+  dispatch => ({
+    createNewCategory: bindActionCreators(createNewCategory, dispatch)
+  })
+)
 class AdminCategoriesNew extends PureComponent {
   render() {
-    const { error, data } = this.props
+    const { error, data, isLoading } = this.props
 
     return (
       <div className="container form-wrapper">
@@ -21,13 +32,24 @@ class AdminCategoriesNew extends PureComponent {
               />
             </div>
             {error && <div className="bg-danger">{error}</div>}
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-primary"
+            >
               {data ? "Edit" : "Add"}
             </button>
           </form>
         </div>
       </div>
     )
+  }
+
+  _handleAddProduct = e => {
+    const { createNewCategory } = this.props
+    e.preventDefault()
+
+    createNewCategory(this.name.value)
   }
 }
 

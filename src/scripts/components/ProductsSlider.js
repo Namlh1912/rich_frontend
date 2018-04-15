@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import Slider from "react-slick";
-import StarRatingComponent from "react-star-rating-component";
+import React, { PureComponent } from "react"
+import Slider from "react-slick"
+import StarRatingComponent from "react-star-rating-component"
 
 const settings = {
   slidesToShow: 1,
@@ -10,37 +10,45 @@ const settings = {
   dots: true,
   infinite: false,
   arrows: false
-};
+}
 
 class SliderItem extends PureComponent {
   state = {
     rating: 0
-  };
+  }
 
   _handleRating = next => {
-    this.setState({ rating: next });
-  };
+    this.setState({ rating: next })
+  }
 
   render() {
-    const { data, index } = this.props;
-    const { rating } = this.state;
+    const { data, index, onSubmit } = this.props
+    const { rating } = this.state
     const imgStyle = {
-      background: `url(${data.imgLink}) no-repeat center center`,
+      background: `url(${window.__BASE_IMG_URL__ +
+        data.imgLink}) no-repeat center center`,
       width: "100%",
       paddingBottom: "100%",
       backgroundSize: "cover"
-    };
-    console.log(this.props.customerInfo);
+    }
     return data.isNull ? (
       <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
     ) : data.isForm ? (
       <div className="col-xs-12 col-sm-12 col-md-12">
         <div className="submit-form col-xs-12 col-sm-12 col-md-12">
-          <p>Bạn đã hoàn thành survey!</p>
+          <div className="form-group col-xs-12 col-sm-12 col-md-12">
+            <textarea
+              ref={node => (this.feedback = node)}
+              className="form-control feedback"
+              id="description"
+              rows="3"
+              placeholder="Đánh giá"
+            />
+          </div>
           <button
             type="submit"
             className="btn btn-primary submit-customer-survey"
-            onClick={() => this._onSubmitCustomerForm()}
+            onClick={onSubmit}
           >
             Hoàn thành
           </button>
@@ -61,7 +69,7 @@ class SliderItem extends PureComponent {
                 <StarRatingComponent
                   name="rating1"
                   starCount={5}
-                  value={data.rates}
+                  value={rating}
                   onStarClick={this._handleRating}
                 />
               </td>
@@ -69,70 +77,95 @@ class SliderItem extends PureComponent {
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 }
 
 const formatData = data => {
-  const numb = 4 - data.length % 4;
-  const newData = [...data];
+  const numb = 4 - data.length % 4
+  const newData = [...data]
 
   if (numb !== 0) {
     for (let i = 0; i < numb; i++) {
       newData.push({
         id: new Date().getTime(),
         isNull: true
-      });
+      })
     }
   }
   newData.push({
     id: new Date().getTime(),
     isForm: true
-  });
+  })
 
-  return newData;
-};
+  return newData
+}
 
 class ProductsSlider extends PureComponent {
   constructor(props) {
-    super(props);
-    console.log(props.data);
+    super(props)
+
     this.state = {
-      data: formatData(props.data)
-    };
+      data:
+        props.data && props.data.length ? formatData(props.data) : props.data
+    }
   }
 
   componentWillReceiveProps(props) {
-    const { data } = this.props;
+    const { data } = this.props
 
     if (data !== props.data) {
       this.setState({
-        data: formatData(props.data)
-      });
+        data:
+          props.data && props.data.length ? formatData(props.data) : props.data
+      })
     }
   }
 
   render() {
-    const { data } = this.state;
+    const { data } = this.state
 
-    return (
+    return !!data.length ? (
       <div className="products-slider">
         <Slider {...settings}>
           {data.map((item, index) => {
-            console.log(item);
             return (
               <SliderItem
                 key={item.id}
                 data={item}
+                ref={node => (this[item.id] = node)}
                 index={index}
                 customerInfo={this.props.customerInfo}
+                onSubmit={this._handleSubmitRate}
               />
-            );
+            )
           })}
         </Slider>
       </div>
-    );
+    ) : (
+      <div className="container">
+        <h3>Không tồn tại sản phẩm!</h3>
+      </div>
+    )
+  }
+
+  _handleSubmitRate = () => {
+    const { onComplete } = this.props
+    const { data } = this.state
+    const rates = data.reduce((result, current) => {
+      return current.isForm || current.isNull
+        ? result
+        : result.concat({
+            productId: current.id,
+            rating: this[current.id].state.rating
+          })
+    }, [])
+
+    onComplete({
+      feedback: this[data[data.length - 1].id].feedback.value,
+      rates
+    })
   }
 }
 
-export default ProductsSlider;
+export default ProductsSlider

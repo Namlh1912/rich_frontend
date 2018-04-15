@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 
 class FeedbackForm extends PureComponent {
   render() {
     return (
       <div className="form-feedback">
-        <form className="col-xs-12 col-sm-6 col-md-6">
+        <div className="col-xs-12 col-sm-6 col-md-6">
           <div className="form-group col-xs-12 col-sm-8 col-md-8">
             <input
               ref={node => (this.name = node)}
@@ -34,38 +34,30 @@ class FeedbackForm extends PureComponent {
               />
             </div>
           </div>
-          <div className="form-group col-xs-12 col-sm-12 col-md-12">
-            <textarea
-              ref={node => (this.feedback = node)}
-              className="form-control feedback"
-              id="description"
-              rows="3"
-              placeholder="Đánh giá khách hàng"
-            />
-          </div>
           <div className="col-xs-12 col-sm-12 col-md-12">
             <button
               style={{ float: "right" }}
-              type="submit"
               className="btn btn-primary submit"
-              onClick={() => this._onSubmitCustomerForm()}
+              onClick={this._handleNextStep}
             >
               <span className="glyphicon glyphicon-chevron-right" />
             </button>
           </div>
-        </form>
+        </div>
       </div>
-    );
+    )
   }
 
-  _onSubmitCustomerForm = e => {
-    const name = this.name.value;
-    const email = this.email.value;
-    const phone = this.phone.value;
-    const feedback = this.feedback.value;
-    var data = { name, email, phone, feedback };
-    this.props.onItemClick(data);
-  };
+  _handleNextStep = e => {
+    e.preventDefault()
+    const { onNextStep } = this.props
+
+    onNextStep({
+      name: this.name.value,
+      email: this.email.value,
+      phone: this.phone.value
+    })
+  }
 }
 
-export default FeedbackForm;
+export default FeedbackForm

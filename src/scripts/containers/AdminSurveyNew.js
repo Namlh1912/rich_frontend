@@ -1,5 +1,8 @@
 import React, { PureComponent } from "react"
 import Modal from "react-responsive-modal"
+import { addNewSurvey, editSurvey } from "../actions/survey"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 
 const questionTypes = ["normal", "radio", "checkbox"]
 
@@ -18,7 +21,7 @@ const ModalAnswer = ({ open, onClose, onConfirm }) => {
   }
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} little>
       <h2>Add New Answer</h2>
       <div className="form-group">
         <textarea
@@ -43,17 +46,17 @@ const ModalAnswer = ({ open, onClose, onConfirm }) => {
 class ModalQuestion extends PureComponent {
   initState = {
     currentType: questionTypes[0],
-    answers: [],
+    answer: [],
     open: false
   }
 
   state = { ...this.initState }
 
   render() {
-    const { currentType, answers, open } = this.state
+    const { currentType, answer, open } = this.state
 
     return (
-      <Modal open={this.props.open} onClose={this.props.onClose}>
+      <Modal open={this.props.open} onClose={this.props.onClose} little>
         <h2>Add New Question</h2>
         <div className="form-group">
           <label style={{ marginRight: 10 }} htmlFor="current-type">
@@ -85,7 +88,7 @@ class ModalQuestion extends PureComponent {
             >
               Add
             </button>
-            <ul id="answers">{answers.map(ans => <li key={ans}>{ans}</li>)}</ul>
+            <ul id="answers">{answer.map(ans => <li key={ans}>{ans}</li>)}</ul>
           </div>
         )}
         <div className="text-center">
@@ -123,12 +126,12 @@ class ModalQuestion extends PureComponent {
 
   _handleAddAnswer = ans =>
     this.setState({
-      answers: this.state.answers.concat(ans),
+      answer: this.state.answer.concat(ans),
       open: false
     })
 
   _handleConfirm = () => {
-    const { currentType, answers } = this.state
+    const { currentType, answer } = this.state
     const { data } = this.props
     const question = this.question.value
 
@@ -136,19 +139,21 @@ class ModalQuestion extends PureComponent {
       if (currentType === "normal") {
         this.props.onConfirm({
           id: data && data.id,
-          question,
-          type: currentType,
-          answers: null
+          description: question,
+          questionType: currentType,
+          answer: null,
+          status: true
         })
 
         this.setState(this.initState)
       } else {
-        if (!!answers.length) {
+        if (!!answer.length) {
           this.props.onConfirm({
             id: data && data.id,
-            question,
-            type: currentType,
-            answers
+            description: question,
+            questionType: currentType,
+            answer,
+            status: true
           })
 
           this.setState(this.initState)
@@ -158,6 +163,15 @@ class ModalQuestion extends PureComponent {
   }
 }
 
+@connect(
+  state => ({
+    isLoading: state.survey.isLoading
+  }),
+  dispatch => ({
+    addNewSurvey: bindActionCreators(addNewSurvey, dispatch),
+    editSurvey: bindActionCreators(editSurvey, dispatch)
+  })
+)
 class AdminSurveyNew extends PureComponent {
   constructor(props) {
     super(props)
@@ -171,39 +185,54 @@ class AdminSurveyNew extends PureComponent {
   generateContent = data => {
     return data.map((item, index) => {
       return (
-        <tr key={item.id}>
-          <td>{item.id}</td>
-          <td>{item.question}</td>
-          <td>{item.type}</td>
-          <td>
-            {item.answers && (
-              <ul>
-                {item.answers.map(ans => (
-                  <li key={`${item.id}_${ans}`}>{ans}</li>
-                ))}
-              </ul>
-            )}
-          </td>
-          <td className="text-right">
-            <button
-              className="btn btn-danger"
-              onClick={() => this._handleDeleteQuestion(item.id)}
-            >
-              X
-            </button>
-          </td>
-        </tr>
+        (item.status === true || item.status === undefined) && (
+          <tr key={index}>
+            <td>{item.id}</td>
+            <td>{item.description}</td>
+            <td>{item.questionType}</td>
+            <td>
+              {item.answer &&
+                !!item.answer.length && (
+                  <ul>
+                    {item.answer.map(ans => (
+                      <li key={`${item.id}_${ans}`}>{ans}</li>
+                    ))}
+                  </ul>
+                )}
+            </td>
+            <td className="text-right">
+              <button
+                className="btn btn-danger"
+                onClick={() => this._handleDeleteQuestion(item.id)}
+              >
+                X
+              </button>
+            </td>
+          </tr>
+        )
       )
     })
   }
 
   render() {
     const { data, open } = this.state
-    const { data: oldData } = this.props
+    const { data: oldData, isLoading } = this.props
 
     return (
       <div className="container">
         <h1>{oldData ? "Edit Survey" : "Add New Survey"}</h1>
+        <div className="form-group">
+          <label htmlFor="surveyname">Survey Name</label>
+          <input
+            ref={node => (this.surveyName = node)}
+            type="text"
+            className="form-control"
+            id="surveyname"
+            placeholder="Survey Name"
+            autoComplete="surveyname"
+            defaultValue={oldData && oldData.title}
+          />
+        </div>
         <table className="table table-hover">
           <thead>
             <tr>
@@ -219,6 +248,7 @@ class AdminSurveyNew extends PureComponent {
         <button
           className="btn btn-success btn-add"
           onClick={this._handleOpenModal}
+          disabled={isLoading}
         >
           Add New Question
         </button>
@@ -230,9 +260,20 @@ class AdminSurveyNew extends PureComponent {
         {!!data.length && (
           <div className="text-center">
             {oldData ? (
-              <button className="btn btn-primary">Confirm Edit</button>
+              <button
+                className="btn btn-primary"
+                onClick={this._handleEditSurvey}
+              >
+                Confirm Edit
+              </button>
             ) : (
-              <button className="btn btn-primary">Add New Survey</button>
+              <button
+                className="btn btn-primary"
+                onClick={this._handleCreateSurvey}
+                disabled={isLoading}
+              >
+                Create Survey
+              </button>
             )}
           </div>
         )}
@@ -243,16 +284,67 @@ class AdminSurveyNew extends PureComponent {
   _handleDeleteQuestion = id => {
     const { data } = this.state
     return this.setState({
-      data: data.filter(i => i.id !== id)
+      data: data.map(
+        item => (item.id === id ? { ...item, status: false } : item)
+      )
+    })
+  }
+
+  _handleEditSurvey = e => {
+    e.preventDefault()
+
+    const { data } = this.state
+    const { editSurvey } = this.props
+
+    editSurvey({
+      id: this.props.data.id,
+      title: this.surveyName.value,
+      questions: data.map(ques => {
+        return ques.questionType === "normal"
+          ? {
+              id: ques.id,
+              description: ques.description,
+              questionType: ques.questionType,
+              status: ques.status
+            }
+          : {
+              id: ques.id,
+              description: ques.description,
+              questionType: ques.questionType,
+              answer: ques.answer.join("#@#"),
+              status: ques.status
+            }
+      })
+    })
+  }
+
+  _handleCreateSurvey = e => {
+    e.preventDefault()
+    const { data } = this.state
+    const { addNewSurvey } = this.props
+
+    addNewSurvey({
+      title: this.surveyName.value,
+      questions: data.map(ques => {
+        return ques.questionType === "normal"
+          ? {
+              description: ques.description,
+              questionType: ques.questionType
+            }
+          : {
+              description: ques.description,
+              questionType: ques.questionType,
+              answer: ques.answer.join("#@#")
+            }
+      })
     })
   }
 
   _handleAddQuestion = question => {
     const { data } = this.state
-    const newId = data[data.length - 1].id + 1
 
     return this.setState({
-      data: data.concat({ ...question, id: newId }),
+      data: data.concat({ ...question }),
       open: false
     })
   }

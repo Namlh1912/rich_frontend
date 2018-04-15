@@ -5,39 +5,6 @@ import { getAllSurveys } from "../actions/survey";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-const list = [
-  {
-    id: "1",
-    title: "Product",
-    list: [
-      { id: "1", title: "Food" },
-      { id: "2", title: "Ice-cream" },
-      { id: "3", title: "Fruit" },
-      { id: "10", title: "Cake" },
-      { id: "4", title: "Food" },
-      { id: "5", title: "Ice-cream" },
-      { id: "6", title: "Fruit" },
-      { id: "7", title: "Cake" },
-      { id: "1", title: "Food" },
-      { id: "2", title: "Ice-cream" },
-      { id: "3", title: "Fruit" },
-      { id: "10", title: "Cake" },
-      { id: "4", title: "Food" },
-      { id: "5", title: "Ice-cream" },
-      { id: "6", title: "Fruit" },
-      { id: "7", title: "Cake" }
-    ]
-  },
-  {
-    id: "2",
-    title: "Survey",
-    list: [
-      { id: "1", title: "User-survey" },
-      { id: "2", title: "User-survey event 2" }
-    ]
-  }
-];
-
 @connect(
   state => ({
     isLoading: state.category.isLoading,
@@ -64,7 +31,7 @@ class Home extends PureComponent {
                   <Link
                     key={cate.id}
                     className="menu-item"
-                    to={`/category/${cate.id}`}
+                    to={`/categories/${cate.id}`}
                   >
                     {cate.name}
                   </Link>

@@ -1,56 +1,82 @@
-import React, { PureComponent } from "react";
-import ProductsSlider from "../components/ProductsSlider";
-import { getCategoryDetail } from "../actions/category";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import FeedbackForm from "../components/FeedbackForm";
+import React, { PureComponent } from "react"
+import ProductsSlider from "../components/ProductsSlider"
+import { getCategoryDetail, submitRate } from "../actions/category"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import FeedbackForm from "../components/FeedbackForm"
 
 @connect(
-  state => ({
-    category: state.category.category
+  (state, props) => ({
+    isLoading: state.category.isLoading,
+    category: state.category.category,
+    categoryId: parseInt(props.params.id, 10)
   }),
   dispatch => ({
-    getCategoryDetail: bindActionCreators(getCategoryDetail, dispatch)
+    getCategoryDetail: bindActionCreators(getCategoryDetail, dispatch),
+    submitRate: bindActionCreators(submitRate, dispatch)
   })
 )
 class Category extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       view: 1,
       customerInfo: {}
-    };
+    }
   }
 
   render() {
-    const { category } = this.props;
-    console.log(category);
+    const { category, categoryId, isLoading } = this.props
+    const { view } = this.state
 
-    return this.state.view === 1 ? (
-      <div className="col-lg-12 col-md-12">
-        <FeedbackForm onItemClick={this.onHandleClick} />
-      </div>
-    ) : category ? (
-      <div id="products" className="container">
-        <ProductsSlider
-          data={category.products}
-          customerInfo={this.state.customerInfo}
-        />
-      </div>
-    ) : null;
+    return !isLoading ? (
+      view === 1 ? (
+        <div className="col-lg-12 col-md-12">
+          <FeedbackForm
+            onNextStep={this._handleNextStep}
+            ref={node => (this.feedbackForm = node)}
+          />
+        </div>
+      ) : category && category.id === categoryId ? (
+        <div id="products" className="container">
+          <ProductsSlider
+            data={category.products}
+            customerInfo={this.state.customerInfo}
+            onComplete={this._handleSubmitRate}
+          />
+        </div>
+      ) : null
+    ) : (
+      <div>Loading...</div>
+    )
   }
 
   componentDidMount() {
-    const { params, getCategoryDetail } = this.props;
+    const { categoryId, getCategoryDetail } = this.props
 
-    getCategoryDetail(params.id);
+    getCategoryDetail(categoryId)
   }
 
-  onHandleClick = data => {
-    if (data) {
-      this.setState({ view: 2, customerInfo: data });
-    }
-  };
+  _handleSubmitRate = data => {
+    const { submitRate, categoryId, getCategoryDetail } = this.props
+    const { customerInfo } = this.state
+
+    submitRate(
+      {
+        categoryId,
+        customer: { ...customerInfo, feedback: data.feedback },
+        rates: data.rates
+      },
+      () => {
+        getCategoryDetail(categoryId)
+        this.setState({ view: 1, customerInfo: {} })
+      }
+    )
+  }
+
+  _handleNextStep = data => {
+    this.setState({ view: 2, customerInfo: data })
+  }
 }
 
-export default Category;
+export default Category

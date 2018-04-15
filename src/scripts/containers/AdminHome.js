@@ -1,61 +1,60 @@
 import React, { PureComponent } from "react"
 import { Link } from "react-router"
+import { getAllCategories, downloadRate } from "../actions/category"
+import { getAllSurveys, downloadSurveyDetail } from "../actions/survey"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 
-const list = [
-  {
-    key: "product",
-    text: "Product",
-    list: [
-      { id: "1", title: "Food" },
-      { id: "2", title: "Ice-cream" },
-      { id: "3", title: "Fruit" },
-      { id: "10", title: "Cake" },
-      { id: "4", title: "Food" },
-      { id: "5", title: "Ice-cream" },
-      { id: "6", title: "Fruit" },
-      { id: "7", title: "Cake" },
-      { id: "1", title: "Food" },
-      { id: "2", title: "Ice-cream" },
-      { id: "3", title: "Fruit" },
-      { id: "10", title: "Cake" },
-      { id: "4", title: "Food" },
-      { id: "5", title: "Ice-cream" },
-      { id: "6", title: "Fruit" },
-      { id: "7", title: "Cake" }
-    ]
-  },
-  {
-    key: "survey",
-    text: "Survey",
-    list: [
-      { id: "1", title: "User-survey" },
-      { id: "2", title: "User-survey event 2" }
-    ]
-  }
-]
-
+@connect(
+  state => ({
+    isLoading: state.category.isLoading && state.survey.isLoading,
+    categories: state.category.categories,
+    surveys: state.survey.surveys
+  }),
+  dispatch => ({
+    getAllCategories: bindActionCreators(getAllCategories, dispatch),
+    getAllSurveys: bindActionCreators(getAllSurveys, dispatch),
+    downloadRate: bindActionCreators(downloadRate, dispatch),
+    downloadSurveyDetail: bindActionCreators(downloadSurveyDetail, dispatch)
+  })
+)
 class AdminHome extends PureComponent {
   render() {
+    const {
+      categories,
+      surveys,
+      downloadRate,
+      downloadSurveyDetail,
+      isLoading
+    } = this.props
+
     return (
       <div id="home" className="container">
         <div className="row">
           <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 border-right">
             <div className="menu">
-              <h2>{list[0].text}</h2>
+              <h2>Products</h2>
               <div className="menu-list">
+                <button
+                  disabled={isLoading}
+                  className="btn-info color-white menu-item"
+                  onClick={downloadRate}
+                >
+                  Export All Rates
+                </button>
                 <Link
                   className="btn-success color-white menu-item"
                   to={`/admin/categories/new`}
                 >
                   <b>Add new Category</b>
                 </Link>
-                {list[0].list.map(item => (
+                {categories.map(cate => (
                   <Link
-                    key={item.id}
+                    key={cate.id}
                     className="menu-item"
-                    to={`/admin/categories/${item.id}`}
+                    to={`/admin/categories/${cate.id}`}
                   >
-                    {item.title}
+                    {cate.name}
                   </Link>
                 ))}
               </div>
@@ -63,15 +62,22 @@ class AdminHome extends PureComponent {
           </div>
           <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <div className="menu">
-              <h2>{list[1].text}</h2>
+              <h2>Surveys</h2>
               <div className="menu-list">
+                <button
+                  disabled={isLoading}
+                  className="btn-info color-white menu-item"
+                  onClick={downloadSurveyDetail}
+                >
+                  Export Surveys Record
+                </button>
                 <Link
                   className="btn-success color-white menu-item"
                   to={`/admin/surveys/new`}
                 >
                   <b>Add new Survey</b>
                 </Link>
-                {list[1].list.map(item => (
+                {surveys.map(item => (
                   <Link
                     key={item.id}
                     className="menu-item"
@@ -86,6 +92,13 @@ class AdminHome extends PureComponent {
         </div>
       </div>
     )
+  }
+
+  componentDidMount() {
+    const { getAllCategories, getAllSurveys } = this.props
+
+    getAllCategories()
+    getAllSurveys()
   }
 }
 

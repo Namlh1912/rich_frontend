@@ -1,23 +1,14 @@
-export function login(email, password) {
-  if (email && password) {
-    return dispatch => {
-      dispatch({
-        type: "USER_LOGIN_SUCCESS",
-        res: {
-          profile: {
-            email
-          },
-          token: email
-        }
-      })
-    }
-  } else {
-    return dispatch => {
-      dispatch({
-        type: "USER_LOGIN_FAILURE",
-        error: "Invalid email or password!"
-      })
-    }
+import callApi from "./api"
+
+export function login(username, password) {
+  return dispatch => {
+    callApi(dispatch, "USER_LOGIN", "/login", {
+      method: "POST",
+      body: {
+        username,
+        password
+      }
+    })
   }
 }
 
