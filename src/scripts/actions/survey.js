@@ -22,7 +22,7 @@ export function downloadSurveyDetail() {
   }
 }
 
-export function submitSurvey(data) {
+export function submitSurvey(data, callBack) {
   return dispatch => {
     callApi(dispatch, "SUBMIT_SURVEY", "/surveys-detail", {
       method: "POST",
@@ -30,7 +30,8 @@ export function submitSurvey(data) {
       headers: {
         "Content-Type": "application/json"
       },
-      type: "json"
+      type: "json",
+      callBack
     })
   }
 }

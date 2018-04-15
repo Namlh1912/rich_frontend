@@ -24,7 +24,6 @@ export function deleteProduct(id, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
-    console.log(id)
     callApi(dispatch, "DELETE_PRODUCT", "/products", {
       method: "PATCH",
       body: JSON.stringify({

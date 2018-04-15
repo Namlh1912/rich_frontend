@@ -7,6 +7,7 @@ import FeedbackForm from "../components/FeedbackForm"
 
 @connect(
   (state, props) => ({
+    isLoading: state.category.isLoading,
     category: state.category.category,
     categoryId: parseInt(props.params.id, 10)
   }),
@@ -25,24 +26,29 @@ class Category extends PureComponent {
   }
 
   render() {
-    const { category, categoryId } = this.props
+    const { category, categoryId, isLoading } = this.props
+    const { view } = this.state
 
-    return this.state.view === 1 ? (
-      <div className="col-lg-12 col-md-12">
-        <FeedbackForm
-          onNextStep={this._handleNextStep}
-          ref={node => (this.feedbackForm = node)}
-        />
-      </div>
-    ) : category && category.id === categoryId ? (
-      <div id="products" className="container">
-        <ProductsSlider
-          data={category.products}
-          customerInfo={this.state.customerInfo}
-          onComplete={this._handleSubmitRate}
-        />
-      </div>
-    ) : null
+    return !isLoading ? (
+      view === 1 ? (
+        <div className="col-lg-12 col-md-12">
+          <FeedbackForm
+            onNextStep={this._handleNextStep}
+            ref={node => (this.feedbackForm = node)}
+          />
+        </div>
+      ) : category && category.id === categoryId ? (
+        <div id="products" className="container">
+          <ProductsSlider
+            data={category.products}
+            customerInfo={this.state.customerInfo}
+            onComplete={this._handleSubmitRate}
+          />
+        </div>
+      ) : null
+    ) : (
+      <div>Loading...</div>
+    )
   }
 
   componentDidMount() {
@@ -52,14 +58,20 @@ class Category extends PureComponent {
   }
 
   _handleSubmitRate = data => {
-    const { submitRate, categoryId } = this.props
+    const { submitRate, categoryId, getCategoryDetail } = this.props
     const { customerInfo } = this.state
 
-    submitRate({
-      categoryId,
-      customer: { ...customerInfo, feedback: data.feedback },
-      rates: data.rates
-    })
+    submitRate(
+      {
+        categoryId,
+        customer: { ...customerInfo, feedback: data.feedback },
+        rates: data.rates
+      },
+      () => {
+        getCategoryDetail(categoryId)
+        this.setState({ view: 1, customerInfo: {} })
+      }
+    )
   }
 
   _handleNextStep = data => {

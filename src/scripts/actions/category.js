@@ -22,7 +22,7 @@ export function downloadRate() {
   }
 }
 
-export function submitRate(data) {
+export function submitRate(data, callBack) {
   return dispatch => {
     callApi(dispatch, "SUBMIT_RATE", "/rates", {
       method: "POST",
@@ -30,7 +30,8 @@ export function submitRate(data) {
       headers: {
         "Content-type": "application/json"
       },
-      type: "json"
+      type: "json",
+      callBack
     })
   }
 }

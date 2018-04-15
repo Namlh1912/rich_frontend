@@ -17,9 +17,9 @@ import { getSurvey, submitSurvey } from "../actions/survey"
 )
 class Surveys extends PureComponent {
   render() {
-    const { survey, surveyId } = this.props
+    const { isLoading, survey, surveyId } = this.props
 
-    return survey && survey.id === surveyId ? (
+    return !isLoading && survey && survey.id === surveyId ? (
       <div id="surveys" className="container-fluid">
         <SurveyForm
           data={survey.questions}
@@ -39,9 +39,11 @@ class Surveys extends PureComponent {
   }
 
   _handleSubmitSurvey = survey => {
-    const { submitSurvey } = this.props
+    const { submitSurvey, getSurvey, surveyId } = this.props
 
-    submitSurvey(survey)
+    submitSurvey(survey, () => {
+      getSurvey(surveyId)
+    })
   }
 }
 
