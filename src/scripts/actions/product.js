@@ -20,15 +20,23 @@ export function editProduct(data) {
   }
 }
 
-export function deleteProduct(id) {
+export function deleteProduct(id, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
-    callApi(dispatch, "DELETE_PRODUCT", "/products/" + id, {
-      method: "DELETE",
+    console.log(id)
+    callApi(dispatch, "DELETE_PRODUCT", "/products", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        status: false
+      }),
       headers: {
-        Authorization: `Bearer ${state.auth.token}`
-      }
+        Authorization: `Bearer ${state.auth.token}`,
+        "Content-type": "application/json"
+      },
+      type: "json",
+      callBack
     })
   }
 }

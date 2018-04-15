@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux"
 import { addNewProduct, editProduct, deleteProduct } from "../actions/product"
 import Image from "../../images/default-image.jpg"
 import ConfirmModal from "../components/ConfirmModal"
+import { routerActions } from "react-router-redux"
 
 @connect(
   (state, props) => ({
@@ -13,7 +14,8 @@ import ConfirmModal from "../components/ConfirmModal"
   dispatch => ({
     addNewProduct: bindActionCreators(addNewProduct, dispatch),
     editProduct: bindActionCreators(editProduct, dispatch),
-    deleteProduct: bindActionCreators(deleteProduct, dispatch)
+    deleteProduct: bindActionCreators(deleteProduct, dispatch),
+    router: bindActionCreators(routerActions, dispatch)
   })
 )
 class AdminProductNew extends PureComponent {
@@ -91,16 +93,14 @@ class AdminProductNew extends PureComponent {
             </div>
           </form>
           {data ? (
-            <div className="text-center">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="btn btn-primary"
-                onClick={this._handleEditProduct}
-              >
-                Edit
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-primary"
+              onClick={this._handleEditProduct}
+            >
+              Edit
+            </button>
           ) : (
             <div className="text-center">
               <button
@@ -113,7 +113,7 @@ class AdminProductNew extends PureComponent {
               </button>
             </div>
           )}
-          {/* {data && (
+          {data && (
             <button
               className="btn btn-danger pull-right"
               disabled={isLoading}
@@ -121,7 +121,7 @@ class AdminProductNew extends PureComponent {
             >
               Delete
             </button>
-          )} */}
+          )}
         </div>
         <ConfirmModal
           open={open}
@@ -134,9 +134,11 @@ class AdminProductNew extends PureComponent {
   }
 
   _handleDeleteProduct = () => {
-    const { data, deleteProduct } = this.props
+    const { data, deleteProduct, router } = this.props
 
-    deleteProduct(data.id)
+    deleteProduct(data.id, () => {
+      router.push("/admin")
+    })
   }
 
   _handleImageChange = node => {
