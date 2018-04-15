@@ -3,7 +3,6 @@ import Logo from "../../images/logo.png"
 import { Link } from "react-router"
 
 const Header = () => {
-  // console.log(this.props.location.pathname);
   return (
     <div className="header">
       <div className="container">
@@ -18,7 +17,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -6,6 +6,19 @@ export function getAllSurveys() {
   }
 }
 
+export function submitSurvey(data) {
+  return dispatch => {
+    callApi(dispatch, "SUBMIT_SURVEY", "/surveys-detail", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "json"
+    })
+  }
+}
+
 export function addNewSurvey(data) {
   return (dispatch, getState) => {
     const state = getState()

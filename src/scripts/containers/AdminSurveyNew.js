@@ -141,7 +141,8 @@ class ModalQuestion extends PureComponent {
           id: data && data.id,
           description: question,
           questionType: currentType,
-          answer: null
+          answer: null,
+          status: true
         })
 
         this.setState(this.initState)
@@ -151,7 +152,8 @@ class ModalQuestion extends PureComponent {
             id: data && data.id,
             description: question,
             questionType: currentType,
-            answer
+            answer,
+            status: true
           })
 
           this.setState(this.initState)
@@ -183,29 +185,31 @@ class AdminSurveyNew extends PureComponent {
   generateContent = data => {
     return data.map((item, index) => {
       return (
-        <tr key={item.id}>
-          <td>{item.id}</td>
-          <td>{item.description}</td>
-          <td>{item.questionType}</td>
-          <td>
-            {item.answer &&
-              !!item.answer.length && (
-                <ul>
-                  {item.answer.map(ans => (
-                    <li key={`${item.id}_${ans}`}>{ans}</li>
-                  ))}
-                </ul>
-              )}
-          </td>
-          <td className="text-right">
-            <button
-              className="btn btn-danger"
-              onClick={() => this._handleDeleteQuestion(item.id)}
-            >
-              X
-            </button>
-          </td>
-        </tr>
+        (item.status === true || item.status === undefined) && (
+          <tr key={index}>
+            <td>{item.id}</td>
+            <td>{item.description}</td>
+            <td>{item.questionType}</td>
+            <td>
+              {item.answer &&
+                !!item.answer.length && (
+                  <ul>
+                    {item.answer.map(ans => (
+                      <li key={`${item.id}_${ans}`}>{ans}</li>
+                    ))}
+                  </ul>
+                )}
+            </td>
+            <td className="text-right">
+              <button
+                className="btn btn-danger"
+                onClick={() => this._handleDeleteQuestion(item.id)}
+              >
+                X
+              </button>
+            </td>
+          </tr>
+        )
       )
     })
   }
@@ -280,7 +284,9 @@ class AdminSurveyNew extends PureComponent {
   _handleDeleteQuestion = id => {
     const { data } = this.state
     return this.setState({
-      data: data.filter(i => i.id !== id)
+      data: data.map(
+        item => (item.id === id ? { ...item, status: false } : item)
+      )
     })
   }
 
@@ -298,13 +304,15 @@ class AdminSurveyNew extends PureComponent {
           ? {
               id: ques.id,
               description: ques.description,
-              questionType: ques.questionType
+              questionType: ques.questionType,
+              status: ques.status
             }
           : {
               id: ques.id,
               description: ques.description,
               questionType: ques.questionType,
-              answer: ques.answer.join("#@#")
+              answer: ques.answer.join("#@#"),
+              status: ques.status
             }
       })
     })
@@ -334,10 +342,9 @@ class AdminSurveyNew extends PureComponent {
 
   _handleAddQuestion = question => {
     const { data } = this.state
-    const newId = !!data.length ? data[data.length - 1].id + 1 : 1
 
     return this.setState({
-      data: data.concat({ ...question, id: newId }),
+      data: data.concat({ ...question }),
       open: false
     })
   }

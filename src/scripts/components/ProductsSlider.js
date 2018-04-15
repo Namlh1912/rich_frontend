@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import Slider from "react-slick";
-import StarRatingComponent from "react-star-rating-component";
+import React, { PureComponent } from "react"
+import Slider from "react-slick"
+import StarRatingComponent from "react-star-rating-component"
 
 const settings = {
   slidesToShow: 1,
@@ -10,28 +10,27 @@ const settings = {
   dots: true,
   infinite: false,
   arrows: false
-};
+}
 
 class SliderItem extends PureComponent {
   state = {
     rating: 0
-  };
+  }
 
   _handleRating = next => {
-    this.setState({ rating: next });
-  };
+    this.setState({ rating: next })
+  }
 
   render() {
-    const { data, index } = this.props;
-    const { rating } = this.state;
+    const { data, index } = this.props
+    const { rating } = this.state
     const imgStyle = {
       background: `url(${window.__BASE_IMG_URL__ +
         data.imgLink}) no-repeat center center`,
       width: "100%",
       paddingBottom: "100%",
       backgroundSize: "cover"
-    };
-    console.log(this.props.customerInfo);
+    }
     return data.isNull ? (
       <div className="slider-item col-xs-12 col-sm-12 col-md-6 col-lg-6" />
     ) : data.isForm ? (
@@ -70,34 +69,34 @@ class SliderItem extends PureComponent {
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 }
 
 const formatData = data => {
-  const numb = 4 - data.length % 4;
-  const newData = [...data];
+  const numb = 4 - data.length % 4
+  const newData = [...data]
 
   if (numb !== 0) {
     for (let i = 0; i < numb; i++) {
       newData.push({
         id: new Date().getTime(),
         isNull: true
-      });
+      })
     }
   }
   newData.push({
     id: new Date().getTime(),
     isForm: true
-  });
+  })
 
-  return newData;
-};
+  return newData
+}
 
 class ProductsSlider extends PureComponent {
   constructor(props) {
-    super(props);
-    console.log(props.data);
+    super(props)
+
     this.state = {
       data:
         props.data && props.data.length ? formatData(props.data) : props.data
@@ -105,7 +104,7 @@ class ProductsSlider extends PureComponent {
   }
 
   componentWillReceiveProps(props) {
-    const { data } = this.props;
+    const { data } = this.props
 
     if (data !== props.data) {
       this.setState({
@@ -116,13 +115,12 @@ class ProductsSlider extends PureComponent {
   }
 
   render() {
-    const { data } = this.state;
+    const { data } = this.state
 
     return !!data.length ? (
       <div className="products-slider">
         <Slider {...settings}>
           {data.map((item, index) => {
-            console.log(item);
             return (
               <SliderItem
                 key={item.id}
@@ -130,7 +128,7 @@ class ProductsSlider extends PureComponent {
                 index={index}
                 customerInfo={this.props.customerInfo}
               />
-            );
+            )
           })}
         </Slider>
       </div>
@@ -142,4 +140,4 @@ class ProductsSlider extends PureComponent {
   }
 }
 
-export default ProductsSlider;
+export default ProductsSlider
