@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import CakeImg from "../../images/cake2.jpg";
+import CakeImg from "../../images/cake3.jpg";
 
 const province = [
   { key: "HCM", text: "Hồ Chí Minh" },
