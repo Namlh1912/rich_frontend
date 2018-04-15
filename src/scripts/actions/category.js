@@ -6,6 +6,19 @@ export function getAllCategories() {
   }
 }
 
+export function submitRate(data) {
+  return dispatch => {
+    callApi(dispatch, "SUBMIT_RATE", "/rates", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json"
+      },
+      type: "json"
+    })
+  }
+}
+
 export function editCategory(cate) {
   return dispatch => {
     callApi(dispatch, "EDIT_CATEGORY", "/categories", {

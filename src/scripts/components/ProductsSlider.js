@@ -22,7 +22,7 @@ class SliderItem extends PureComponent {
   }
 
   render() {
-    const { data, index } = this.props
+    const { data, index, onSubmit } = this.props
     const { rating } = this.state
     const imgStyle = {
       background: `url(${window.__BASE_IMG_URL__ +
@@ -36,11 +36,19 @@ class SliderItem extends PureComponent {
     ) : data.isForm ? (
       <div className="col-xs-12 col-sm-12 col-md-12">
         <div className="submit-form col-xs-12 col-sm-12 col-md-12">
-          <p>Bạn đã hoàn thành survey!</p>
+          <div className="form-group col-xs-12 col-sm-12 col-md-12">
+            <textarea
+              ref={node => (this.feedback = node)}
+              className="form-control feedback"
+              id="description"
+              rows="3"
+              placeholder="Đánh giá"
+            />
+          </div>
           <button
             type="submit"
             className="btn btn-primary submit-customer-survey"
-            onClick={() => this._onSubmitCustomerForm()}
+            onClick={onSubmit}
           >
             Hoàn thành
           </button>
@@ -125,8 +133,10 @@ class ProductsSlider extends PureComponent {
               <SliderItem
                 key={item.id}
                 data={item}
+                ref={node => (this[item.id] = node)}
                 index={index}
                 customerInfo={this.props.customerInfo}
+                onSubmit={this._handleSubmitRate}
               />
             )
           })}
@@ -137,6 +147,24 @@ class ProductsSlider extends PureComponent {
         <h3>Không tồn tại sản phẩm!</h3>
       </div>
     )
+  }
+
+  _handleSubmitRate = () => {
+    const { onComplete } = this.props
+    const { data } = this.state
+    const rates = data.reduce((result, current) => {
+      return current.isForm || current.isNull
+        ? result
+        : result.concat({
+            productId: current.id,
+            rating: this[current.id].state.rating
+          })
+    }, [])
+
+    onComplete({
+      feedback: this[data[data.length - 1].id].feedback.value,
+      rates
+    })
   }
 }
 
