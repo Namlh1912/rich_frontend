@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react"
-import CakeImg from "../../images/cake2.jpg"
+import React, { PureComponent } from "react";
+import CakeImg from "../../images/cake2.jpg";
 
 const province = [
   { key: "HCM", text: "Hồ Chí Minh" },
@@ -10,16 +10,70 @@ const province = [
   { key: "CM", text: "Cà Mau" },
   { key: "BT", text: "Bến Tre" },
   { key: "LA", text: "Long An" },
-  { key: "BMT", text: "Buôn Mê Thuột" },
   { key: "H", text: "Huế" },
-  { key: "HA", text: "Hội An" }
-]
+  { key: "HA", text: "Hội An" },
+  { key: "AG", text: "An Giang" },
+  { key: "BL", text: "Bạc Liêu" },
+  { key: "BR-VT", text: "Bà Rịa - Vũng Tàu" },
+  { key: "BK", text: "Bắc Kạn" },
+  { key: "BG", text: "Bắc Giang" },
+  { key: "BN", text: "Bắc Ninh" },
+  { key: "BD1", text: "Bình Dương" },
+  { key: "BD2", text: "Bình Định" },
+  { key: "BP", text: "Bình Phước" },
+  { key: "BT", text: "Bình Thuận" },
+  { key: "CB", text: "Cao Bằng" },
+  { key: "DL1", text: "Đắk Lắk" },
+  { key: "DN", text: "Đắk Nông" },
+  { key: "DB", text: "Điện Biên" },
+  { key: "DN", text: "Đồng Nai" },
+  { key: "DT", text: "Đồng Tháp" },
+  { key: "GL", text: "Gia Lai" },
+  { key: "HG1", text: "Hà Giang" },
+  { key: "HN", text: "Hà Nam" },
+  { key: "HT1", text: "Hà Tây" },
+  { key: "HT2", text: "Hà Tĩnh" },
+  { key: "HD", text: "Hải Dương" },
+  { key: "HB", text: "Hoà Bình" },
+  { key: "HG2", text: "Hậu Giang" },
+  { key: "HY", text: "Hưng Yên" },
+  { key: "KH", text: "Khánh Hoà" },
+  { key: "KG", text: "Kiên Giang" },
+  { key: "KT", text: "Kon Tum" },
+  { key: "LC1", text: "Lai Châu" },
+  { key: "LC2", text: "Lào Cai" },
+  { key: "LS", text: "Lạng Sơn" },
+  { key: "LD", text: "Lâm Đồng" },
+  { key: "ND", text: "Nam Định" },
+  { key: "NA", text: "Nghệ An" },
+  { key: "NB", text: "Ninh Bình" },
+  { key: "NT", text: "Ninh Thuận" },
+  { key: "PT", text: "Phú Thọ" },
+  { key: "PY", text: "Phú Yên" },
+  { key: "QB", text: "Quảng Bình" },
+  { key: "QN1", text: "Quảng Nam" },
+  { key: "QN2", text: "Quảng Ngãi" },
+  { key: "QN3", text: "Quảng Ninh" },
+  { key: "QT", text: "Quảng Trị" },
+  { key: "ST", text: "Sóc Trăng" },
+  { key: "SL", text: "Sơn La" },
+  { key: "TN", text: "Tây Ninh" },
+  { key: "TB", text: "Thái Bình" },
+  { key: "TN", text: "Thái Nguyên" },
+  { key: "TH", text: "Thanh Hoá" },
+  { key: "TG", text: "Tiền Giang" },
+  { key: "TV", text: "Trà Vinh" },
+  { key: "TQ", text: "Tuyên Quang" },
+  { key: "VL", text: "Vĩnh Long" },
+  { key: "VP", text: "Vĩnh Phúc" },
+  { key: "YB", text: "Yên Bái" }
+];
 
 class CustomerInfoForm extends PureComponent {
-  static business = ["Bakery", "Food Service", "Ratiler"]
+  static business = ["Bakery", "Food Service", "Ratiler"];
 
   render() {
-    const { opts, onSubmit } = this.props
+    const { opts, onSubmit } = this.props;
 
     return (
       <div className="form-customer ">
@@ -106,13 +160,13 @@ class CustomerInfoForm extends PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 class YesNoForm extends PureComponent {
   render() {
-    const { data, count } = this.props
+    const { data, count } = this.props;
     return (
       <div className="row">
         <div className="form-group col-md-12">
@@ -135,13 +189,13 @@ class YesNoForm extends PureComponent {
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 
 class OthersInput extends PureComponent {
   render() {
-    const { data, onClickItem } = this.props
+    const { data, onClickItem } = this.props;
 
     return (
       <div className="col-xs-12 col-md-6" style={{ paddingLeft: 0 }}>
@@ -162,13 +216,13 @@ class OthersInput extends PureComponent {
           placeholder="Others"
         />
       </div>
-    )
+    );
   }
 }
 
 class MultipleChoiceForm extends PureComponent {
   render() {
-    const { data, opts, count } = this.props
+    const { data, opts, count } = this.props;
 
     return (
       <div className="row">
@@ -190,13 +244,13 @@ class MultipleChoiceForm extends PureComponent {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
 class ShortTextForm extends PureComponent {
   render() {
-    const { question, count } = this.props
+    const { question, count } = this.props;
 
     return (
       <div className="form-textarea row">
@@ -211,13 +265,13 @@ class ShortTextForm extends PureComponent {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
 class SurveyForm extends PureComponent {
   render() {
-    const { data, opts } = this.props
+    const { data, opts } = this.props;
 
     return (
       <div className="form-survey col-md-12">
@@ -234,7 +288,7 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               case "radio":
                 return (
                   <YesNoForm
@@ -243,7 +297,7 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               case "normal":
                 return (
                   <ShortTextForm
@@ -252,44 +306,44 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               default:
-                return ""
+                return "";
             }
           })}
         </form>
       </div>
-    )
+    );
   }
 }
 
 class Survey extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       checked: true,
       click: false
-    }
+    };
   }
 
   checkboxHandler = e => {
     this.setState({
       checked: e.target.checked
-    })
-  }
+    });
+  };
 
   onClickHandle = selector => {
-    var x = document.getElementById(selector).classList
-    var y = document.getElementById(`${selector}Text`).classList
+    var x = document.getElementById(selector).classList;
+    var y = document.getElementById(`${selector}Text`).classList;
 
     if (x.contains("hideInput")) {
-      x.remove("hideInput")
-      y.add("hideText")
+      x.remove("hideInput");
+      y.add("hideText");
     } else {
-      x.add("hideInput")
-      y.remove("hideText")
+      x.add("hideInput");
+      y.remove("hideText");
     }
-  }
+  };
 
   render() {
     const imgStyle = {
@@ -297,10 +351,10 @@ class Survey extends PureComponent {
       backgroundSize: "cover",
       textAlign: "center",
       backgroundPosition: "center"
-    }
+    };
     const opts = {
       openOther: selector => this.onClickHandle(selector)
-    }
+    };
 
     return (
       <div className="row">
@@ -331,25 +385,25 @@ class Survey extends PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   _handleSubmitForm = e => {
-    e.preventDefault()
-    const { data, onSubmitSurvey, surveyTitle } = this.props
+    e.preventDefault();
+    const { data, onSubmitSurvey, surveyTitle } = this.props;
 
     /* Get Customer Info */
-    const business = []
+    const business = [];
     CustomerInfoForm.business.forEach((item, index) => {
       if (this.customerInfo[index].checked) {
-        business.push(item)
+        business.push(item);
       }
       if (index === CustomerInfoForm.business.length - 1) {
         if (this.customerInfo.others.checked) {
-          business.push(this.customerInfo.othersInput.value)
+          business.push(this.customerInfo.othersInput.value);
         }
       }
-    })
+    });
     const customer = {
       name: this.customerInfo.name.value,
       email: ".",
@@ -357,47 +411,47 @@ class Survey extends PureComponent {
       city: this.customerInfo.city.value,
       company: this.customerInfo.company.value,
       business: business.join(";")
-    }
+    };
 
     /* Get Survey Info */
-    const survey = []
+    const survey = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].questionType === "normal") {
         survey.push({
           question: data[i].description,
           answer: this.surveyForm[i].input.value,
           customer: customer.name
-        })
+        });
       } else if (data[i].questionType === "checkbox") {
-        const checkboxAns = []
+        const checkboxAns = [];
         data[i].answer.forEach((ans, index) => {
           if (this.surveyForm[i][index].checked) {
-            checkboxAns.push(ans)
+            checkboxAns.push(ans);
           }
           if (
             index === data[i].answer.length - 1 &&
             this.surveyForm[i][index + 1].checkbox.checked
           ) {
-            checkboxAns.push(this.surveyForm[i][index + 1].input.value)
+            checkboxAns.push(this.surveyForm[i][index + 1].input.value);
           }
-        })
+        });
         survey.push({
           question: data[i].description,
           answer: checkboxAns.join(";"),
           customer: customer.name
-        })
+        });
       } else {
-        const checkboxAns = []
+        const checkboxAns = [];
         data[i].answer.forEach((ans, index) => {
           if (this.surveyForm[i][index].checked) {
-            checkboxAns.push(ans)
+            checkboxAns.push(ans);
           }
-        })
+        });
         survey.push({
           question: data[i].description,
           answer: checkboxAns.join(";"),
           customer: customer.name
-        })
+        });
       }
     }
 
@@ -407,8 +461,8 @@ class Survey extends PureComponent {
         title: surveyTitle,
         questions: survey
       }
-    })
-  }
+    });
+  };
 }
 
-export default Survey
+export default Survey;
