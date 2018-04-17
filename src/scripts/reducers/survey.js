@@ -13,6 +13,7 @@ export default function surveyReducer(state = INITIAL_STATE, action) {
     case "EDIT_SURVEY":
     case "SUBMIT_SURVEY":
     case "GET_SURVEY_RECORD":
+    case "DELETE_SURVEY":
       return {
         ...state,
         isLoading: true,
@@ -37,6 +38,7 @@ export default function surveyReducer(state = INITIAL_STATE, action) {
       }
 
     case "EDIT_SURVEY_SUCCESS":
+    case "DELETE_SURVEY_SUCCESS":
       return {
         ...state,
         isLoading: false,
@@ -70,6 +72,7 @@ export default function surveyReducer(state = INITIAL_STATE, action) {
     case "EDIT_SURVEY_FAILURE":
     case "GET_SURVEY_DETAIL_FAILURE":
     case "GET_SURVEY_RECORD_FAILURE":
+    case "DELETE_SURVEY_FAILURE":
       return {
         ...state,
         isLoading: false,

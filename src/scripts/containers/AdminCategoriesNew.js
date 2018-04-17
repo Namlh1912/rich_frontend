@@ -2,13 +2,15 @@ import React, { PureComponent } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { createNewCategory } from "../actions/category"
+import { routerActions } from "react-router-redux"
 
 @connect(
   state => ({
     isLoading: state.category.isLoading
   }),
   dispatch => ({
-    createNewCategory: bindActionCreators(createNewCategory, dispatch)
+    createNewCategory: bindActionCreators(createNewCategory, dispatch),
+    router: bindActionCreators(routerActions, dispatch)
   })
 )
 class AdminCategoriesNew extends PureComponent {
@@ -46,10 +48,12 @@ class AdminCategoriesNew extends PureComponent {
   }
 
   _handleAddProduct = e => {
-    const { createNewCategory } = this.props
+    const { createNewCategory, router } = this.props
     e.preventDefault()
 
-    createNewCategory(this.name.value)
+    createNewCategory(this.name.value, () => {
+      router.push("/admin")
+    })
   }
 }
 

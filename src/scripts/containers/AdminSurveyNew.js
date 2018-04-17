@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react"
 import Modal from "react-responsive-modal"
-import { addNewSurvey, editSurvey } from "../actions/survey"
+import { addNewSurvey, editSurvey, deleteSurvey } from "../actions/survey"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
+import { routerActions } from "react-router-redux"
+import ConfirmModal from "../components/ConfirmModal"
 
 const questionTypes = ["normal", "radio", "checkbox"]
 
@@ -164,12 +166,14 @@ class ModalQuestion extends PureComponent {
 }
 
 @connect(
-  state => ({
+  (state, props) => ({
     isLoading: state.survey.isLoading
   }),
   dispatch => ({
     addNewSurvey: bindActionCreators(addNewSurvey, dispatch),
-    editSurvey: bindActionCreators(editSurvey, dispatch)
+    editSurvey: bindActionCreators(editSurvey, dispatch),
+    router: bindActionCreators(routerActions, dispatch),
+    deleteSurvey: bindActionCreators(deleteSurvey, dispatch)
   })
 )
 class AdminSurveyNew extends PureComponent {
@@ -178,6 +182,7 @@ class AdminSurveyNew extends PureComponent {
 
     this.state = {
       open: false,
+      openConfirmModal: false,
       data: (props.data && props.data.questions) || []
     }
   }
@@ -215,7 +220,7 @@ class AdminSurveyNew extends PureComponent {
   }
 
   render() {
-    const { data, open } = this.state
+    const { data, open, openConfirmModal } = this.state
     const { data: oldData, isLoading } = this.props
 
     return (
@@ -257,15 +262,32 @@ class AdminSurveyNew extends PureComponent {
           onClose={this._handleCloseModal}
           onConfirm={this._handleAddQuestion}
         />
+        <ConfirmModal
+          open={openConfirmModal}
+          onClose={this._handleCloseConfirmModal}
+          onConfirm={this._handleDeleteSurvey}
+          message="Are you sure to delete this Survey?"
+        />
         {!!data.length && (
           <div className="text-center">
             {oldData ? (
-              <button
-                className="btn btn-primary"
-                onClick={this._handleEditSurvey}
-              >
-                Confirm Edit
-              </button>
+              <div>
+                <button
+                  className="btn btn-primary"
+                  onClick={this._handleEditSurvey}
+                  style={{ marginRight: 10 }}
+                >
+                  Confirm Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={this._handleOpenConfirmModal}
+                  disabled={isLoading}
+                  style={{ marginLeft: 10 }}
+                >
+                  Delete
+                </button>
+              </div>
             ) : (
               <button
                 className="btn btn-primary"
@@ -281,6 +303,16 @@ class AdminSurveyNew extends PureComponent {
     )
   }
 
+  _handleOpenConfirmModal = () =>
+    this.setState({
+      openConfirmModal: true
+    })
+
+  _handleCloseConfirmModal = () =>
+    this.setState({
+      openConfirmModal: false
+    })
+
   _handleDeleteQuestion = id => {
     const { data } = this.state
     return this.setState({
@@ -290,32 +322,46 @@ class AdminSurveyNew extends PureComponent {
     })
   }
 
+  _handleDeleteSurvey = e => {
+    e.preventDefault()
+
+    const { surveyId, deleteSurvey, router } = this.props
+
+    deleteSurvey(surveyId, () => {
+      this._handleCloseConfirmModal()
+      router.push("/admin")
+    })
+  }
+
   _handleEditSurvey = e => {
     e.preventDefault()
 
     const { data } = this.state
     const { editSurvey } = this.props
 
-    editSurvey({
-      id: this.props.data.id,
-      title: this.surveyName.value,
-      questions: data.map(ques => {
-        return ques.questionType === "normal"
-          ? {
-              id: ques.id,
-              description: ques.description,
-              questionType: ques.questionType,
-              status: ques.status
-            }
-          : {
-              id: ques.id,
-              description: ques.description,
-              questionType: ques.questionType,
-              answer: ques.answer.join("#@#"),
-              status: ques.status
-            }
-      })
-    })
+    editSurvey(
+      {
+        id: this.props.data.id,
+        title: this.surveyName.value,
+        questions: data.map(ques => {
+          return ques.questionType === "normal"
+            ? {
+                id: ques.id,
+                description: ques.description,
+                questionType: ques.questionType,
+                status: ques.status
+              }
+            : {
+                id: ques.id,
+                description: ques.description,
+                questionType: ques.questionType,
+                answer: ques.answer.join("#@#"),
+                status: ques.status
+              }
+        })
+      },
+      this._goBack
+    )
   }
 
   _handleCreateSurvey = e => {
@@ -323,21 +369,28 @@ class AdminSurveyNew extends PureComponent {
     const { data } = this.state
     const { addNewSurvey } = this.props
 
-    addNewSurvey({
-      title: this.surveyName.value,
-      questions: data.map(ques => {
-        return ques.questionType === "normal"
-          ? {
-              description: ques.description,
-              questionType: ques.questionType
-            }
-          : {
-              description: ques.description,
-              questionType: ques.questionType,
-              answer: ques.answer.join("#@#")
-            }
-      })
-    })
+    addNewSurvey(
+      {
+        title: this.surveyName.value,
+        questions: data.map(ques => {
+          return ques.questionType === "normal"
+            ? {
+                description: ques.description,
+                questionType: ques.questionType
+              }
+            : {
+                description: ques.description,
+                questionType: ques.questionType,
+                answer: ques.answer.join("#@#")
+              }
+        })
+      },
+      this._goBack
+    )
+  }
+
+  _goBack = () => {
+    this.props.router.push("/admin")
   }
 
   _handleAddQuestion = question => {

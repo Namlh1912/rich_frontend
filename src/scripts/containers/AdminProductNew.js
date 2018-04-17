@@ -134,11 +134,15 @@ class AdminProductNew extends PureComponent {
   }
 
   _handleDeleteProduct = () => {
-    const { data, deleteProduct, router } = this.props
+    const { data, deleteProduct } = this.props
 
-    deleteProduct(data.id, () => {
-      router.push("/admin")
-    })
+    deleteProduct(data.id, this._goBack)
+  }
+
+  _goBack = () => {
+    const { router, categoryId } = this.props
+
+    router.push(`/admin/categories/${categoryId}`)
   }
 
   _handleImageChange = node => {
@@ -159,24 +163,30 @@ class AdminProductNew extends PureComponent {
     e.preventDefault()
     const { addNewProduct, categoryId } = this.props
 
-    addNewProduct({
-      name: this.name.value,
-      description: this.description.value,
-      categoryId: categoryId,
-      file: this.image.files[0]
-    })
+    addNewProduct(
+      {
+        name: this.name.value,
+        description: this.description.value,
+        categoryId: categoryId,
+        file: this.image.files[0]
+      },
+      this._goBack
+    )
   }
 
   _handleEditProduct = e => {
     e.preventDefault()
     const { editProduct, categoryId, data } = this.props
 
-    editProduct({
-      name: this.name.value,
-      id: data.id,
-      categoryId,
-      description: this.description.value
-    })
+    editProduct(
+      {
+        name: this.name.value,
+        id: data.id,
+        categoryId,
+        description: this.description.value
+      },
+      this._goBack
+    )
   }
 
   _handleCloseModal = () =>

@@ -10,17 +10,15 @@
 
 .products-table {
   tbody {
-    tr {
-      &:hover {
-        cursor: pointer;
-      }
+    td {
+      vertical-align: middle !important;
     }
   }
 
   .product-image {
     img {
       max-width: 100%;
-      max-height: 100px;
+      max-height: 60px;
     }
   }
 

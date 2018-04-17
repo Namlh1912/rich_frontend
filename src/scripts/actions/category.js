@@ -53,11 +53,12 @@ export function getCategoryDetail(cateId) {
   }
 }
 
-export function createNewCategory(name) {
+export function createNewCategory(name, callBack) {
   return dispatch => {
     callApi(dispatch, "NEW_CATEGORY", "/categories", {
       method: "POST",
-      body: { name }
+      body: { name },
+      callBack
     })
   }
 }

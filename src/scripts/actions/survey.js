@@ -36,7 +36,7 @@ export function submitSurvey(data, callBack) {
   }
 }
 
-export function addNewSurvey(data) {
+export function addNewSurvey(data, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
@@ -47,12 +47,33 @@ export function addNewSurvey(data) {
         Authorization: `Bearer ${state.auth.token}`,
         "Content-Type": "application/json"
       },
-      type: "json"
+      type: "json",
+      callBack
     })
   }
 }
 
-export function editSurvey(data) {
+export function deleteSurvey(id, callBack) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "DELETE_SURVEY", "/surveys", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        status: false
+      }),
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`,
+        "Content-type": "application/json"
+      },
+      type: "json",
+      callBack
+    })
+  }
+}
+
+export function editSurvey(data, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
@@ -63,7 +84,8 @@ export function editSurvey(data) {
         Authorization: `Bearer ${state.auth.token}`,
         "Content-Type": "application/json"
       },
-      type: "json"
+      type: "json",
+      callBack
     })
   }
 }

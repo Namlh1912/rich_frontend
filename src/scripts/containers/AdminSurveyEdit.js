@@ -19,7 +19,7 @@ class AdminSurveyEdit extends PureComponent {
     const { survey, surveyId } = this.props
 
     return survey && survey.id === surveyId ? (
-      <AdminSurveyNew data={survey} />
+      <AdminSurveyNew data={survey} surveyId={surveyId} />
     ) : (
       <div>Loading...</div>
     )

@@ -6,7 +6,7 @@ export function getProduct(id) {
   }
 }
 
-export function editProduct(data) {
+export function editProduct(data, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
@@ -15,7 +15,8 @@ export function editProduct(data) {
       body: data,
       headers: {
         Authorization: `Bearer ${state.auth.token}`
-      }
+      },
+      callBack
     })
   }
 }
@@ -40,7 +41,7 @@ export function deleteProduct(id, callBack) {
   }
 }
 
-export function addNewProduct(product) {
+export function addNewProduct(product, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
@@ -49,7 +50,8 @@ export function addNewProduct(product) {
       body: product,
       headers: {
         Authorization: `Bearer ${state.auth.token}`
-      }
+      },
+      callBack
     })
   }
 }
