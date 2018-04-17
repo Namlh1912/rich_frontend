@@ -25,13 +25,6 @@ class AdminSurveyEdit extends PureComponent {
     )
   }
 
-  componentWillReceiveProps(props) {
-    const { survey, isLoading, getSurvey, surveyId } = this.props
-    if (!props.survey && survey && !props.isLoading && isLoading) {
-      getSurvey(surveyId)
-    }
-  }
-
   componentDidMount() {
     const { getSurvey, surveyId } = this.props
 

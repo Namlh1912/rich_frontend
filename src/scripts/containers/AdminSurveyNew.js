@@ -328,7 +328,6 @@ class AdminSurveyNew extends PureComponent {
     const { surveyId, deleteSurvey, router } = this.props
 
     deleteSurvey(surveyId, () => {
-      this._handleCloseConfirmModal()
       router.push("/admin")
     })
   }
