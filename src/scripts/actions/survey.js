@@ -57,8 +57,8 @@ export function deleteSurvey(id, callBack) {
   return (dispatch, getState) => {
     const state = getState()
 
-    callApi(dispatch, "DELETE_SURVEY", "/surveys", {
-      method: "PATCH",
+    callApi(dispatch, "DELETE_SURVEY", "/surveys/" + id, {
+      method: "DELETE",
       body: JSON.stringify({
         id,
         status: false

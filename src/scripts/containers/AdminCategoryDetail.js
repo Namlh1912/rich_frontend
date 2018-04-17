@@ -1,7 +1,11 @@
 import React, { PureComponent } from "react"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import { getCategoryDetail, editCategory } from "../actions/category"
+import {
+  getCategoryDetail,
+  editCategory,
+  deleteCategory
+} from "../actions/category"
 import { deleteProduct } from "../actions/product"
 import { routerActions } from "react-router-redux"
 import { Link } from "react-router"
@@ -50,18 +54,20 @@ const generateContent = (data, onClick, onDelete) =>
     getCategoryDetail: bindActionCreators(getCategoryDetail, dispatch),
     editCategory: bindActionCreators(editCategory, dispatch),
     router: bindActionCreators(routerActions, dispatch),
-    deleteProduct: bindActionCreators(deleteProduct, dispatch)
+    deleteProduct: bindActionCreators(deleteProduct, dispatch),
+    deleteCategory: bindActionCreators(deleteCategory, dispatch)
   })
 )
 class AdminCategoryDetail extends PureComponent {
   state = {
     open: false,
+    openDelCateModal: false,
     selectedProduct: null
   }
 
   render() {
     const { isLoading, categoryId, category: data } = this.props
-    const { open, selectedProduct } = this.state
+    const { open, selectedProduct, openDelCateModal } = this.state
 
     return !isLoading && data && data.id === categoryId ? (
       <div className="container">
@@ -111,12 +117,26 @@ class AdminCategoryDetail extends PureComponent {
         ) : (
           <h3>There is no product!</h3>
         )}
+        <div className="text-center">
+          <button
+            className="btn btn-danger"
+            onClick={this._handleOpenCateModal}
+          >
+            Delete Category
+          </button>
+        </div>
         <Link
           className="btn btn-success btn-add"
           to={`/admin/categories/${categoryId}/products/new`}
         >
           Add New Product
         </Link>
+        <ConfirmModal
+          open={openDelCateModal}
+          onClose={this._handleCloseModal}
+          onConfirm={this._handleDeleteCategory}
+          message="Are you sure to delete this Category?"
+        />
         <ConfirmModal
           open={open}
           onClose={this._handleCloseModal}
@@ -142,6 +162,22 @@ class AdminCategoryDetail extends PureComponent {
       getCategoryDetail(categoryId)
     }
   }
+
+  _handleDeleteCategory = () => {
+    const { deleteCategory, categoryId, router } = this.props
+
+    deleteCategory(categoryId, () => router.push("/admin"))
+  }
+
+  _handleCloseCateModal = () =>
+    this.setState({
+      openDelCateModal: false
+    })
+
+  _handleOpenCateModal = id =>
+    this.setState({
+      openDelCateModal: true
+    })
 
   _handleCloseModal = () =>
     this.setState({

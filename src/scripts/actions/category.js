@@ -47,6 +47,26 @@ export function editCategory(cate) {
   }
 }
 
+export function deleteCategory(id, callBack) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    callApi(dispatch, "DELETE_CATEGORY", "/categories/" + id, {
+      method: "DELETE",
+      body: JSON.stringify({
+        id,
+        status: false
+      }),
+      headers: {
+        Authorization: `Bearer ${state.auth.token}`,
+        "Content-type": "application/json"
+      },
+      type: "json",
+      callBack
+    })
+  }
+}
+
 export function getCategoryDetail(cateId) {
   return dispatch => {
     callApi(dispatch, "GET_CATEGORY_DETAIL", `/categories/${cateId}`)
