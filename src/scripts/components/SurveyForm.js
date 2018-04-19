@@ -81,7 +81,7 @@ class CustomerInfoForm extends PureComponent {
         <div>
           <div className="row">
             <div className="form-group col-lg-12 col-md-12">
-              <label>TÊN CÔNG TY</label>
+              <label>TÊN CÔNG TY/ CỬA HÀNG</label>
               <input
                 ref={node => (this.company = node)}
                 type="text"
@@ -133,24 +133,43 @@ class CustomerInfoForm extends PureComponent {
                 />
               </div>
             </div>
-
-            <div className="form-group col-lg-6 col-md-6">
-              <label>TÊN NGƯỜI LIÊN HỆ</label>
-              <input
-                type="text"
-                ref={node => (this.name = node)}
-                className="form-control customer"
-                id="workplace"
-              />
-            </div>
-            <div className="form-group col-lg-6 col-md-6">
-              <label>SỐ ĐIỆN THOẠI</label>
-              <input
-                ref={node => (this.phone = node)}
-                type="text"
-                className="form-control customer"
-                id="phone"
-              />
+            <div className="row col-sm-12">
+              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+                <label>TÊN KHÁCH HÀNG PHỎNG VẤN</label>
+                <input
+                  type="text"
+                  ref={node => (this.name = node)}
+                  className="form-control customer"
+                  id="workplace"
+                />
+              </div>
+              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+                <label>SỐ ĐIỆN THOẠI</label>
+                <input
+                  ref={node => (this.phone = node)}
+                  type="text"
+                  className="form-control customer"
+                  id="phone"
+                />
+              </div>
+              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+                <label>TÊN NGƯỜI GHI CHÚ</label>
+                <input
+                  ref={node => (this.noter = node)}
+                  type="text"
+                  className="form-control customer"
+                  id="noter"
+                />
+              </div>
+              <div className="form-group col-sm-12col-lg-6 col-md-12">
+                <label>TÊN NGƯỜI PHỎNG VẤN</label>
+                <input
+                  type="text"
+                  ref={node => (this.interviewer = node)}
+                  className="form-control customer"
+                  id="interviewer"
+                />
+              </div>
             </div>
             <div className="col-lg-12 hidden-xs hidden-sm col-md-12">
               <button onClick={onSubmit} className="btn btn-primary submit">
@@ -410,7 +429,9 @@ class Survey extends PureComponent {
       phone: this.customerInfo.phone.value,
       city: this.customerInfo.city.value,
       company: this.customerInfo.company.value,
-      business: business.join(";")
+      business: business.join(";"),
+      noter: this.customerInfo.noter.value,
+      interviewer: this.customerInfo.interviewer.value
     };
 
     /* Get Survey Info */

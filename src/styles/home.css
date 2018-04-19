@@ -6,6 +6,12 @@
     border-right: 1px dashed black;
   }
 
+  @media all and (max-width: 320px) {
+    .border-right {
+      border-right: none;
+    }
+  }
+
   .menu {
     h2 {
       margin-top: 0;
@@ -25,6 +31,63 @@
       &:hover {
         transition: 0.5s;
         border: 1px solid black;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      .menu-item {
+        margin: 10px auto;
+        display: block;
+        width: 180px;
+        height: 60px;
+        line-height: 40px;
+        cursor: pointer;
+        border: 1px dashed black;
+        color: black;
+        text-decoration: none;
+
+        &:hover {
+          transition: 0.5s;
+          border: 1px solid black;
+        }
+      }
+    }
+
+    @media all and (max-width: 380px) {
+      .menu-item {
+        margin: 10px auto;
+        display: block;
+        width: 150px;
+        height: 60px;
+        line-height: 40px;
+        cursor: pointer;
+        border: 1px dashed black;
+        color: black;
+        text-decoration: none;
+
+        &:hover {
+          transition: 0.5s;
+          border: 1px solid black;
+        }
+      }
+    }
+
+    @media all and (max-width: 320px) {
+      .menu-item {
+        margin: 10px auto;
+        display: block;
+        width: 140px;
+        height: 70px;
+        line-height: 40px;
+        cursor: pointer;
+        border: 1px dashed black;
+        color: black;
+        text-decoration: none;
+
+        &:hover {
+          transition: 0.5s;
+          border: 1px solid black;
+        }
       }
     }
   }
