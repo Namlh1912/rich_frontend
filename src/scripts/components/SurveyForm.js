@@ -134,7 +134,7 @@ class CustomerInfoForm extends PureComponent {
               </div>
             </div>
             <div className="row col-sm-12">
-              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+              <div className="form-group col-sm-12 col-lg-12 col-md-12">
                 <label>TÊN KHÁCH HÀNG PHỎNG VẤN</label>
                 <input
                   type="text"
@@ -143,7 +143,7 @@ class CustomerInfoForm extends PureComponent {
                   id="workplace"
                 />
               </div>
-              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+              <div className="form-group col-sm-12 col-lg-12 col-md-12">
                 <label>SỐ ĐIỆN THOẠI</label>
                 <input
                   ref={node => (this.phone = node)}
@@ -152,7 +152,7 @@ class CustomerInfoForm extends PureComponent {
                   id="phone"
                 />
               </div>
-              <div className="form-group col-sm-12 col-lg-6 col-md-12">
+              <div className="form-group col-sm-12 col-lg-12 col-md-12">
                 <label>TÊN NGƯỜI GHI CHÚ</label>
                 <input
                   ref={node => (this.noter = node)}
@@ -161,7 +161,7 @@ class CustomerInfoForm extends PureComponent {
                   id="noter"
                 />
               </div>
-              <div className="form-group col-sm-12col-lg-6 col-md-12">
+              <div className="form-group col-sm-12 col-lg-12 col-md-12">
                 <label>TÊN NGƯỜI PHỎNG VẤN</label>
                 <input
                   type="text"
