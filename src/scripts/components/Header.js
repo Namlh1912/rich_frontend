@@ -13,7 +13,7 @@ const Header = () => {
         </div>
 
         <div className="right">
-          <div className="header-title">The Exclusive Menu</div>
+          <div className="header-title">Khảo Sát Khách Hàng</div>
         </div>
       </div>
     </div>
