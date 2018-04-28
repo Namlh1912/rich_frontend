@@ -102,62 +102,68 @@
       color: #000000;
     }
 
-    .checkbox-wrapper input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
+    .radio-wrapper {
+      text-align: left;
+      font-weight: normal;
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
       cursor: pointer;
+      font-size: 14px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
-    /* Create a custom checkbox */
-    .checkmark {
+    /* Hide the browser's default radio button */
+    .radio-wrapper input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    /* Create a custom radio button */
+    .checkmark-radio {
       position: absolute;
       top: 0;
       left: 0;
       height: 25px;
       width: 25px;
       background-color: #39b455;
+      border-radius: 50%;
     }
 
-    /* On mouse-over, add a background color */
-    .checkbox-wrapper:hover input[type="checkbox"] ~ .checkmark {
+    /* On mouse-over, add a grey background color */
+    .radio-wrapper:hover input[type="radio"] ~ .checkmark-radio {
       background-color: #41b44c;
     }
 
-    /* When the checkbox is checked, add a background */
-    .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
+    /* When the radio button is checked, add a blue background */
+    .radio-wrapper input[type="radio"]:checked ~ .checkmark-radio {
       background-color: #39b455;
     }
 
-    /* Create the checkmark/indicator (hidden when not checked) */
-    .checkmark:after {
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark-radio:after {
       content: "";
       position: absolute;
       display: none;
     }
 
-    /* Show the checkmark when checked */
-    .checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
+    /* Show the indicator (dot/circle) when checked */
+    .radio-wrapper input[type="radio"]:checked ~ .checkmark-radio:after {
       display: block;
     }
 
-    .checkbox-wrapper input[type="checkbox"]:checked ~ .otherText {
-      display: block;
-      margin-top: -25px;
-      position: absolute;
-      z-index: 10;
-    }
-
-    /* Style the checkmark/indicator */
-    .checkbox-wrapper .checkmark:after {
+    /* Style the indicator (dot/circle) */
+    .radio-wrapper .checkmark-radio:after {
+      top: 9px;
       left: 9px;
-      top: 5px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
     }
 
     .form-control.customer {

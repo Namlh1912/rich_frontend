@@ -1,26 +1,26 @@
-import React, { PureComponent } from "react"
-import Modal from "react-responsive-modal"
-import { addNewSurvey, editSurvey, deleteSurvey } from "../actions/survey"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import { routerActions } from "react-router-redux"
-import ConfirmModal from "../components/ConfirmModal"
+import React, { PureComponent } from "react";
+import Modal from "react-responsive-modal";
+import { addNewSurvey, editSurvey, deleteSurvey } from "../actions/survey";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { routerActions } from "react-router-redux";
+import ConfirmModal from "../components/ConfirmModal";
 
-const questionTypes = ["normal", "radio", "checkbox"]
+const questionTypes = ["normal", "radio", "checkbox"];
 
 const generateQuestionTypes = () =>
   questionTypes.map(type => (
     <option key={type} value={type}>
       {type}
     </option>
-  ))
+  ));
 
 const ModalAnswer = ({ open, onClose, onConfirm }) => {
   const _handleConfirm = () => {
-    const answer = this.answer.value
+    const answer = this.answer.value;
 
-    answer && onConfirm(answer)
-  }
+    answer && onConfirm(answer);
+  };
 
   return (
     <Modal open={open} onClose={onClose} little>
@@ -42,20 +42,20 @@ const ModalAnswer = ({ open, onClose, onConfirm }) => {
         </button>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
 class ModalQuestion extends PureComponent {
   initState = {
     currentType: questionTypes[0],
     answer: [],
     open: false
-  }
+  };
 
-  state = { ...this.initState }
+  state = { ...this.initState };
 
   render() {
-    const { currentType, answer, open } = this.state
+    const { currentType, answer, open } = this.state;
 
     return (
       <Modal open={this.props.open} onClose={this.props.onClose} little>
@@ -107,35 +107,35 @@ class ModalQuestion extends PureComponent {
           onConfirm={this._handleAddAnswer}
         />
       </Modal>
-    )
+    );
   }
 
   _handleOpenModalAnswer = () =>
     this.setState({
       open: true
-    })
+    });
 
   _handleCloseModalAnswer = () =>
     this.setState({
       open: false
-    })
+    });
 
   _handleChangeType = e => {
     this.setState({
       currentType: e.target.value
-    })
-  }
+    });
+  };
 
   _handleAddAnswer = ans =>
     this.setState({
       answer: this.state.answer.concat(ans),
       open: false
-    })
+    });
 
   _handleConfirm = () => {
-    const { currentType, answer } = this.state
-    const { data } = this.props
-    const question = this.question.value
+    const { currentType, answer } = this.state;
+    const { data } = this.props;
+    const question = this.question.value;
 
     if (question && currentType) {
       if (currentType === "normal") {
@@ -145,9 +145,9 @@ class ModalQuestion extends PureComponent {
           questionType: currentType,
           answer: null,
           status: true
-        })
+        });
 
-        this.setState(this.initState)
+        this.setState(this.initState);
       } else {
         if (!!answer.length) {
           this.props.onConfirm({
@@ -156,13 +156,13 @@ class ModalQuestion extends PureComponent {
             questionType: currentType,
             answer,
             status: true
-          })
+          });
 
-          this.setState(this.initState)
+          this.setState(this.initState);
         }
       }
     }
-  }
+  };
 }
 
 @connect(
@@ -178,14 +178,17 @@ class ModalQuestion extends PureComponent {
 )
 class AdminSurveyNew extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       open: false,
       openConfirmModal: false,
       data: (props.data && props.data.questions) || []
-    }
+    };
   }
+
+  question = [];
+  ans = [];
 
   generateContent = data => {
     return data.map((item, index) => {
@@ -193,17 +196,29 @@ class AdminSurveyNew extends PureComponent {
         (item.status === true || item.status === undefined) && (
           <tr key={index}>
             <td>{item.id}</td>
-            <td>{item.description}</td>
+            <td>
+              <input
+                ref={node => (this.question[index] = node)}
+                type="text"
+                className="form-control"
+                id="question"
+                defaultValue={item.description}
+              />
+            </td>
             <td>{item.questionType}</td>
+            {/* <td>{item.id}</td>
+            <td>{item.description}</td>
+            <td>{item.questionType}</td> */}
             <td>
               {item.answer &&
-                !!item.answer.length && (
-                  <ul>
-                    {item.answer.map(ans => (
-                      <li key={`${item.id}_${ans}`}>{ans}</li>
-                    ))}
-                  </ul>
-                )}
+              !!item.answer.length && (
+                <ul>
+                  {item.answer.map(ans => (
+                    <li key={`${item.id}_${ans}`}>{ans}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </td>
             <td className="text-right">
               <button
@@ -215,13 +230,13 @@ class AdminSurveyNew extends PureComponent {
             </td>
           </tr>
         )
-      )
-    })
-  }
+      );
+    });
+  };
 
   render() {
-    const { data, open, openConfirmModal } = this.state
-    const { data: oldData, isLoading } = this.props
+    const { data, open, openConfirmModal } = this.state;
+    const { data: oldData, isLoading } = this.props;
 
     return (
       <div className="container">
@@ -300,73 +315,73 @@ class AdminSurveyNew extends PureComponent {
           </div>
         )}
       </div>
-    )
+    );
   }
 
   _handleOpenConfirmModal = () =>
     this.setState({
       openConfirmModal: true
-    })
+    });
 
   _handleCloseConfirmModal = () =>
     this.setState({
       openConfirmModal: false
-    })
+    });
 
   _handleDeleteQuestion = id => {
-    const { data } = this.state
+    const { data } = this.state;
     return this.setState({
       data: data.map(
         item => (item.id === id ? { ...item, status: false } : item)
       )
-    })
-  }
+    });
+  };
 
   _handleDeleteSurvey = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { surveyId, deleteSurvey, router } = this.props
+    const { surveyId, deleteSurvey, router } = this.props;
 
     deleteSurvey(surveyId, () => {
-      router.push("/admin")
-    })
-  }
+      router.push("/admin");
+    });
+  };
 
   _handleEditSurvey = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { data } = this.state
-    const { editSurvey } = this.props
+    const { data } = this.state;
+    const { editSurvey } = this.props;
 
     editSurvey(
       {
         id: this.props.data.id,
         title: this.surveyName.value,
-        questions: data.map(ques => {
+        questions: data.map((ques, index) => {
           return ques.questionType === "normal"
             ? {
                 id: ques.id,
-                description: ques.description,
+                description: this.question[index].value,
                 questionType: ques.questionType,
                 status: ques.status
               }
             : {
                 id: ques.id,
-                description: ques.description,
+                description: this.question[index].value,
                 questionType: ques.questionType,
                 answer: ques.answer.join("#@#"),
                 status: ques.status
-              }
+              };
         })
       },
       this._goBack
-    )
-  }
+    );
+  };
 
   _handleCreateSurvey = e => {
-    e.preventDefault()
-    const { data } = this.state
-    const { addNewSurvey } = this.props
+    e.preventDefault();
+    const { data } = this.state;
+    const { addNewSurvey } = this.props;
 
     addNewSurvey(
       {
@@ -381,35 +396,35 @@ class AdminSurveyNew extends PureComponent {
                 description: ques.description,
                 questionType: ques.questionType,
                 answer: ques.answer.join("#@#")
-              }
+              };
         })
       },
       this._goBack
-    )
-  }
+    );
+  };
 
   _goBack = () => {
-    this.props.router.push("/admin")
-  }
+    this.props.router.push("/admin");
+  };
 
   _handleAddQuestion = question => {
-    const { data } = this.state
+    const { data } = this.state;
 
     return this.setState({
       data: data.concat({ ...question }),
       open: false
-    })
-  }
+    });
+  };
 
   _handleOpenModal = () =>
     this.setState({
       open: true
-    })
+    });
 
   _handleCloseModal = () =>
     this.setState({
       open: false
-    })
+    });
 }
 
-export default AdminSurveyNew
+export default AdminSurveyNew;

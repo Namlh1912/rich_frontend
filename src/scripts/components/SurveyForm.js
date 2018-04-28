@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react"
-import CakeImg from "../../images/cake3.jpg"
+import React, { PureComponent } from "react";
+import CakeImg from "../../images/cake3.jpg";
 
 const province = [
   { key: "HCM", text: "Hồ Chí Minh" },
@@ -67,13 +67,13 @@ const province = [
   { key: "VL", text: "Vĩnh Long" },
   { key: "VP", text: "Vĩnh Phúc" },
   { key: "YB", text: "Yên Bái" }
-]
+];
 
 class CustomerInfoForm extends PureComponent {
-  static business = ["Bakery", "Food Service", "Retailer"]
+  static business = ["Bakery", "Food Service", "Retailer"];
 
   render() {
-    const { opts, onSubmit } = this.props
+    const { optsRadio, onSubmit } = this.props;
 
     return (
       <div className="form-customer ">
@@ -105,24 +105,29 @@ class CustomerInfoForm extends PureComponent {
             </div>
             <div className="form-group col-lg-12 col-md-12">
               {CustomerInfoForm.business.map((item, index) => (
-                <label key={index} className="checkbox-wrapper col-md-6">
+                <label key={index} className="radio-wrapper col-md-6">
                   {item}
-                  <input type="checkbox" ref={node => (this[index] = node)} />
-                  <span className="checkmark" />
+                  <input
+                    type="radio"
+                    name="businessRadio"
+                    ref={node => (this[index] = node)}
+                  />
+                  <span className="checkmark-radio" />
                 </label>
               ))}
               <div className="col-md-6" style={{ paddingLeft: 0 }}>
                 <label
-                  className="checkbox-wrapper col-md-6"
+                  className="radio-wrapper col-md-6"
                   style={{ display: "inline-block" }}
                 >
                   <p id={"other0Text"}>Others</p>
                   <input
                     ref={node => (this.others = node)}
-                    type="checkbox"
-                    onClick={() => opts.openOther(`other0`)}
+                    name="businessRadio"
+                    type="radio"
+                    onClick={() => optsRadio.openOtherRadio(`other0`)}
                   />
-                  <span className="checkmark" />
+                  <span className="checkmark-radio" />
                 </label>
                 <textarea
                   ref={node => (this.othersInput = node)}
@@ -179,13 +184,13 @@ class CustomerInfoForm extends PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 class YesNoForm extends PureComponent {
   render() {
-    const { data, count } = this.props
+    const { data, count } = this.props;
     return (
       <div className="row">
         <div className="form-group col-md-12">
@@ -208,13 +213,13 @@ class YesNoForm extends PureComponent {
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 
 class OthersInput extends PureComponent {
   render() {
-    const { data, onClickItem } = this.props
+    const { data, onClickItem } = this.props;
 
     return (
       <div className="col-xs-12 col-md-6" style={{ paddingLeft: 0 }}>
@@ -235,13 +240,13 @@ class OthersInput extends PureComponent {
           placeholder="Others"
         />
       </div>
-    )
+    );
   }
 }
 
 class MultipleChoiceForm extends PureComponent {
   render() {
-    const { data, opts, count } = this.props
+    const { data, opts, count } = this.props;
 
     return (
       <div className="row">
@@ -263,13 +268,13 @@ class MultipleChoiceForm extends PureComponent {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
 class ShortTextForm extends PureComponent {
   render() {
-    const { question, count } = this.props
+    const { question, count } = this.props;
 
     return (
       <div className="form-textarea row">
@@ -284,13 +289,13 @@ class ShortTextForm extends PureComponent {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
 class SurveyForm extends PureComponent {
   render() {
-    const { data, opts } = this.props
+    const { data, opts } = this.props;
 
     return (
       <div className="form-survey col-md-12">
@@ -307,7 +312,7 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               case "radio":
                 return (
                   <YesNoForm
@@ -316,7 +321,7 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               case "normal":
                 return (
                   <ShortTextForm
@@ -325,44 +330,54 @@ class SurveyForm extends PureComponent {
                     count={index + 1}
                     ref={node => (this[index] = node)}
                   />
-                )
+                );
               default:
-                return ""
+                return "";
             }
           })}
         </form>
       </div>
-    )
+    );
   }
 }
 
 class Survey extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       checked: true,
       click: false
-    }
+    };
   }
 
   checkboxHandler = e => {
     this.setState({
       checked: e.target.checked
-    })
-  }
+    });
+  };
 
   onClickHandle = selector => {
-    var x = document.getElementById(selector).classList
-    var y = document.getElementById(`${selector}Text`).classList
+    var x = document.getElementById(selector).classList;
+    var y = document.getElementById(`${selector}Text`).classList;
 
     if (x.contains("hideInput")) {
-      x.remove("hideInput")
-      y.add("hideText")
+      x.remove("hideInput");
+      y.add("hideText");
     } else {
-      x.add("hideInput")
-      y.remove("hideText")
+      x.add("hideInput");
+      y.remove("hideText");
     }
-  }
+  };
+
+  onClickRadioHandle = selector => {
+    var x = document.getElementById(selector).classList;
+    var y = document.getElementById(`${selector}Text`).classList;
+
+    if (x.contains("hideInput")) {
+      x.remove("hideInput");
+      y.add("hideText");
+    }
+  };
 
   render() {
     const imgStyle = {
@@ -370,10 +385,13 @@ class Survey extends PureComponent {
       backgroundSize: "cover",
       textAlign: "center",
       backgroundPosition: "center"
-    }
+    };
     const opts = {
       openOther: selector => this.onClickHandle(selector)
-    }
+    };
+    const optsRadio = {
+      openOtherRadio: selector => this.onClickRadioHandle(selector)
+    };
 
     return (
       <div className="row">
@@ -382,7 +400,7 @@ class Survey extends PureComponent {
             <div className="col-lg-4 col-md-4">
               <CustomerInfoForm
                 ref={node => (this.customerInfo = node)}
-                opts={opts}
+                optsRadio={optsRadio}
                 onSubmit={this._handleSubmitForm}
               />
               <br />
@@ -404,25 +422,25 @@ class Survey extends PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   _handleSubmitForm = e => {
-    e.preventDefault()
-    const { data, onSubmitSurvey, surveyTitle } = this.props
+    e.preventDefault();
+    const { data, onSubmitSurvey, surveyTitle } = this.props;
 
     /* Get Customer Info */
-    const business = []
+    const business = [];
     CustomerInfoForm.business.forEach((item, index) => {
       if (this.customerInfo[index].checked) {
-        business.push(item)
+        business.push(item);
       }
       if (index === CustomerInfoForm.business.length - 1) {
         if (this.customerInfo.others.checked) {
-          business.push(this.customerInfo.othersInput.value)
+          business.push(this.customerInfo.othersInput.value);
         }
       }
-    })
+    });
     const customer = {
       name: this.customerInfo.name.value,
       email: ".",
@@ -432,47 +450,47 @@ class Survey extends PureComponent {
       business: business.join(";"),
       noter: this.customerInfo.noter.value,
       interviewer: this.customerInfo.interviewer.value
-    }
+    };
 
     /* Get Survey Info */
-    const survey = []
+    const survey = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].questionType === "normal") {
         survey.push({
           question: data[i].description,
           answer: this.surveyForm[i].input.value,
           customer: customer.name
-        })
+        });
       } else if (data[i].questionType === "checkbox") {
-        const checkboxAns = []
+        const checkboxAns = [];
         data[i].answer.forEach((ans, index) => {
           if (this.surveyForm[i][index].checked) {
-            checkboxAns.push(ans)
+            checkboxAns.push(ans);
           }
           if (
             index === data[i].answer.length - 1 &&
             this.surveyForm[i][index + 1].checkbox.checked
           ) {
-            checkboxAns.push(this.surveyForm[i][index + 1].input.value)
+            checkboxAns.push(this.surveyForm[i][index + 1].input.value);
           }
-        })
+        });
         survey.push({
           question: data[i].description,
           answer: checkboxAns.join(";"),
           customer: customer.name
-        })
+        });
       } else {
-        const checkboxAns = []
+        const checkboxAns = [];
         data[i].answer.forEach((ans, index) => {
           if (this.surveyForm[i][index].checked) {
-            checkboxAns.push(ans)
+            checkboxAns.push(ans);
           }
-        })
+        });
         survey.push({
           question: data[i].description,
           answer: checkboxAns.join(";"),
           customer: customer.name
-        })
+        });
       }
     }
 
@@ -482,8 +500,8 @@ class Survey extends PureComponent {
         title: surveyTitle,
         questions: survey
       }
-    })
-  }
+    });
+  };
 }
 
-export default Survey
+export default Survey;
